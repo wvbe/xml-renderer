@@ -1,0 +1,8 @@
+# dependencies
+/node_modules
+
+# test coverage report, which is generated
+/coverage
+
+# distributable file, which is generated
+/dist

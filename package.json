@@ -1,0 +1,46 @@
+{
+  "name": "xml-renderer",
+  "version": "1.0.0",
+  "description": "Render XML to something awesome with this baby",
+  "repository": "wvbe/xml-renderer",
+  "author": {
+    "name": "Wybe Minnebo",
+    "email": "wybe@x-54.com",
+    "url": "https://github.com/wvbe"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/wvbe/xml-renderer",
+  "keywords": [
+    "react",
+    "xml",
+    "render",
+    "xslt",
+    "publish",
+    "xpath"
+  ],
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "./src",
+    "example": "./example",
+    "test": "./test"
+  },
+  "scripts": {
+    "test": "react-scripts test --env=jsdom test/*.test.js --verbose",
+    "prepublish": "mkdir dist; babel ./src/index.js > ./dist/index.js"
+  },
+  "dependencies": {
+    "fontoxpath": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.4.0",
+    "react": "^15.5.4",
+    "react-scripts": "^0.9.5",
+    "react-test-renderer": "^15.5.4"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}
