@@ -1,5 +1,7 @@
 # xml-renderer
 
+[![Join the chat at https://gitter.im/wvbe/xml-renderer](https://badges.gitter.im/wvbe/xml-renderer.svg)](https://gitter.im/wvbe/xml-renderer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A quite simple way of registering rendering functions for XML nodes, effectively an XSL with javascript functions. Works
 great transforming XML to React components, but writing to a JsonML structure or string is also fine.
 
