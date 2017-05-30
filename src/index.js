@@ -91,11 +91,17 @@ class Renderer {
 	}
 }
 
-class RendererIndex {
+class Mode {
 	constructor () {
 		this.contentComponents = [];
 	}
 
+	/**
+	 * Register a rendering callback for an XPath test. Any node matching the test (and not a more specific one)
+	 * will be transformed using onRender.
+	 * @param xPathTest
+	 * @param {Mode~onRender} onRender
+	 */
 	register (xPathTest, onRender) {
 		this.contentComponents.push({
 			xPathTest,
@@ -103,6 +109,11 @@ class RendererIndex {
 		});
 	}
 
+	/**
+	 * Get the rendering callback that best matches a given node.
+	 * @param node
+	 * @returns {Registry~onRender}
+	 */
 	get (node) {
 		const contentComponent = this.contentComponents
 			.sort((a, b) => fontoxpath.compareSpecificity(b.xPathTest, a.xPathTest))
@@ -112,6 +123,14 @@ class RendererIndex {
 
 		return contentComponent && contentComponent.onRender;
 	}
+
+	/**
+	 * The callback that produces a rendering of the matching node. The callback is passed an instance of
+	 * {@link Renderer} for that node as first and only argument.
+	 * @callback Registry~onRender
+	 * @param {Renderer} renderer
+	 * @returns {*}
+	 */
 }
 
 /**
@@ -122,43 +141,44 @@ const MODES = Symbol('modes');
 class Registry {
 	constructor () {
 		this[MODES] = {
-			[DEFAULT_MODE]: new RendererIndex()
+			[DEFAULT_MODE]: new Mode()
 		};
 	}
 
 	/**
-	 * Register a render callback for an XPath test. The callback will be used for any node that matches the XPath and
-	 * not a more specific match.
+	 * An alias for Mode#register of the default mode.
 	 * @param {string} xPathTest - For example, `self::section`
-	 * @param {Registry~onRender} onRender
+	 * @param {Mode~onRender} onRender
 	 */
 	register (xPathTest, onRender) {
 		return this.mode().register(xPathTest, onRender);
 	}
 
 	/**
-	 * The callback that produces a rendering of the matching node. The callback is passed an instance of
-	 * {@link Renderer} for that node as first and only argument.
-	 * @callback Registry~onRender
-	 * @param {Renderer} renderer
-	 * @returns {*}
-	 */
-
-	/**
-	 * Gives you the Renderer for the top-level node of a given DOM.
+	 * Gives you the Renderer for the top-level node of a given DOM, in a given Mode.
 	 * @param node
+	 * @param mode
 	 * @returns {Renderer}
 	 */
 	node (node, mode = DEFAULT_MODE) {
 		return new Renderer(this, mode, node);
 	}
 
+	/**
+	 * Returns a new or existing Mode of a given name so you can Mode#register something cool on it.
+	 * @param name
+	 * @returns {*}
+	 */
 	mode (name = DEFAULT_MODE) {
 		if (!this[MODES][name]) {
-			this[MODES][name] = new RendererIndex();
+			this[MODES][name] = new Mode();
 		}
 
 		return this[MODES][name];
+	}
+
+	registerXPathFunction (name, signature, returnType, callback) {
+		return fontoxpath.registerCustomXPathFunction(name, signature, returnType, callback);
 	}
 
 	[GET_RENDERING_CB] (node, mode) {

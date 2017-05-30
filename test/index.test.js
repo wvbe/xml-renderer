@@ -346,3 +346,35 @@ describe('Keys', () => {
 		expect(Object.keys(keys).filter(key => key.indexOf('OK') === 0).length).toBe(4);
 	});
 });
+
+describe('Custom XPath functions', () => {
+	it('can be registered', () => {
+		const registry = new Registry(),
+			xml = `
+				<div>
+					<aside>
+						<div/>
+					</aside>
+				</div>
+			`;
+
+		registry.registerXPathFunction('node-name-starts-with-vowel', ['node()'], 'xs:boolean', function (domFacade, node) {
+			return 'eaouiy'.split('').includes(node.nodeName.charAt(0));
+		});
+
+		registry.register('self::element()', renderer => (
+			<x key={ renderer.key() }>
+				{ renderer.traverse() }
+			</x>
+		));
+
+		registry.register('self::*[node-name-starts-with-vowel(.)]', renderer => (
+			<x-ok key={ renderer.key() }>
+				{ renderer.traverse() }
+			</x-ok>
+		));
+
+		expect(renderer.create(<RenderingContainer xml={ xml } registry={ registry } />).toJSON()).toMatchSnapshot();
+	})
+
+});
