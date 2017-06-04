@@ -91,11 +91,7 @@ class Renderer {
 	}
 }
 
-class Mode {
-	constructor () {
-		this.contentComponents = [];
-	}
-
+class Mode extends Array {
 	/**
 	 * Register a rendering callback for an XPath test. Any node matching the test (and not a more specific one)
 	 * will be transformed using onRender.
@@ -103,7 +99,7 @@ class Mode {
 	 * @param {Mode~onRender} onRender
 	 */
 	register (xPathTest, onRender) {
-		this.contentComponents.push({
+		this.push({
 			xPathTest,
 			onRender
 		});
@@ -115,7 +111,7 @@ class Mode {
 	 * @returns {Registry~onRender}
 	 */
 	get (node) {
-		const contentComponent = this.contentComponents
+		const contentComponent = this
 			.sort((a, b) => fontoxpath.compareSpecificity(b.xPathTest, a.xPathTest))
 			.find(contentComponent => fontoxpath.evaluateXPathToBoolean(
 				contentComponent.xPathTest,
