@@ -107,6 +107,9 @@ class Mode {
 			xPathTest,
 			onRender
 		});
+
+		this.contentComponents = this.contentComponents
+			.sort((a, b) => fontoxpath.compareSpecificity(b.xPathTest, a.xPathTest));
 	}
 
 	/**
@@ -116,7 +119,6 @@ class Mode {
 	 */
 	get (node) {
 		const contentComponent = this.contentComponents
-			.sort((a, b) => fontoxpath.compareSpecificity(b.xPathTest, a.xPathTest))
 			.find(contentComponent => fontoxpath.evaluateXPathToBoolean(
 				contentComponent.xPathTest,
 				node));
