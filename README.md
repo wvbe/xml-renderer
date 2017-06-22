@@ -104,7 +104,7 @@ const xmlString = `
 `;
 
 // Create a DOM
-const xmlDom = new window.DOMParser().parseToString(
+const xmlDom = new window.DOMParser().parseFromString(
   xmlString,
   'application/xml'
 );
