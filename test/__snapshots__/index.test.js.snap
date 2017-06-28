@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Custom XPath functions can be registered 1`] = `
 <rendering-container>
   <x>
@@ -95,7 +97,7 @@ exports[`Traversal based on a relative XPath query 1`] = `
 </rendering-container>
 `;
 
-exports[`test Will use the most specific selector 1`] = `
+exports[`Will use the most specific selector 1`] = `
 <rendering-container>
   <x-ok />
 </rendering-container>
