@@ -55,6 +55,12 @@ exports[`Modes traverse in the same mode per default 1`] = `
 </rendering-container>
 `;
 
+exports[`Namespaces can be targeted by namespace URI 1`] = `
+<rendering-container>
+  <x-ok />
+</rendering-container>
+`;
+
 exports[`Rendering for comments 1`] = `
 <rendering-container>
   <x>

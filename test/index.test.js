@@ -378,3 +378,23 @@ describe('Custom XPath functions', () => {
 	})
 
 });
+
+describe('Namespaces', () => {
+	it('can be targeted by namespace URI', () => {
+		const registry = new Registry(),
+			xml = `
+				<div xmlns:mfns="namespace-1">
+					<mfns:div />
+					<div />
+				</div>
+			`;
+
+		registry.register('self::*', renderer => renderer.traverse());
+
+		registry.register('self::*[namespace-uri() = "namespace-1"]', renderer => (
+			<x-ok key={ renderer.key() } />
+		));
+
+		expect(renderer.create(<RenderingContainer xml={ xml } registry={ registry } />).toJSON()).toMatchSnapshot();
+	})
+});
