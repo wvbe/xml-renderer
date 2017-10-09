@@ -8,7 +8,7 @@ const MODE = Symbol('mode');
 const GET_RENDERING_CB = Symbol('rendering callback');
 const DEFAULT_MODE = Symbol('default mode');
 
-function getUniqueKeyForNode (targetNode) {
+export function getKeyForNode (targetNode) {
 	const pieces = [];
 
 	let node = targetNode;
@@ -53,7 +53,7 @@ class Renderer {
 	 */
 	key () {
 		if (!this[KEY]) {
-			this[KEY] = getUniqueKeyForNode(this[NODE]) + (this[MODE] === DEFAULT_MODE ? '' : ':' + this[MODE]);
+			this[KEY] = getKeyForNode(this[NODE]) + (this[MODE] === DEFAULT_MODE ? '' : ':' + this[MODE]);
 		}
 
 		return this[KEY];
@@ -140,7 +140,7 @@ class Mode {
  * DOM.
  */
 const MODES = Symbol('modes');
-class Registry {
+export default class Registry {
 	constructor () {
 		this[MODES] = {
 			[DEFAULT_MODE]: new Mode()
@@ -197,5 +197,3 @@ class Registry {
 		return renderingCb;
 	}
 }
-
-export default Registry;

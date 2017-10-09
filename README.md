@@ -20,6 +20,8 @@ npm i xml-renderer --save
 ### Example
 
 ```js
+import XmlRenderer from 'xml-renderer';
+
 const xr = new XmlRenderer();
 
 // 1. Configure one or more elements to look like something
@@ -44,13 +46,13 @@ xr.register('self::person[@github="wvbe"]', renderer => (
 ));
 
 // etc.
-    
+
 // 2. Convert your XML into a Javascript DOM
 const xmlDom = new window.DOMParser().parseFromString(
   xmlString,
   'application/xml'
 );
-    
+
 // 3. Profit
 ReactDOM.render(
   <div>{ xr.node(xmlDom).traverse() }</div>,
@@ -60,8 +62,10 @@ ReactDOM.render(
 
 ## Pro-tips
 - Render modes combined with traversal queries are powerful tools to publish the same content in different ways.
-- The XPath library ([fontoxpath](http://npmjs.org/package/fontoxpath)) supports namespaces and injecting your custom XPath functions.
-- xml-renderer words great with React (or to be more specific, JSX), but can also be used without it to render XML strings, JSONML or other output.
+- The XPath library ([fontoxpath](http://npmjs.org/package/fontoxpath)) supports namespaces and injecting your custom
+  XPath functions.
+- xml-renderer words great with React (or to be more specific, JSX), but can also be used without it to render XML
+  strings, JSONML or other output.
 
 ## License
 
