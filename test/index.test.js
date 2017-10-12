@@ -128,6 +128,28 @@ describe('Traversal', () => {
 	});
 });
 
+describe('Rest arguments', () => {
+	test('Pass whatever', () => {
+		const registry = new Registry(),
+			xml = `
+				<div>
+					<span>NOTOK</span>
+					<span>NOTOK</span>
+				</div>
+			`;
+
+		registry.register('self::div', renderer => (
+			<x key={ renderer.key() }>{ renderer.traverse(null, null, { skeet: 'OK' }) }</x>
+		));
+
+		registry.register('self::span', (renderer, _mode, whatever) => (
+			<x-ok key={ renderer.key() }>{ whatever.skeet }</x-ok>
+		));
+
+		expect(renderer.create(<RenderingContainer xml={ xml } registry={ registry } />).toJSON()).toMatchSnapshot();
+	});
+});
+
 describe('Modes', () => {
 	test('are usable to render out-of-order', () => {
 		const registry = new Registry(),
@@ -239,8 +261,11 @@ describe('Modes', () => {
 			</x>
 		));
 
-		registry.mode('my-mode').register('self::fn', renderer => (
-			<x key={ renderer.key() }>{ renderer.traverse(null, null) }</x>
+		registry.mode('my-mode').register('self::fn', (renderer, mode) => (
+			<x key={ renderer.key() }>
+				{ mode }
+				{ renderer.traverse(null, null) }
+			</x>
 		));
 
 		registry.mode('my-mode').register('self::span', renderer => (

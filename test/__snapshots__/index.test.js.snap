@@ -35,6 +35,7 @@ exports[`Modes reset traversal mode to default 1`] = `
 <rendering-container>
   <x>
     <x>
+      my-mode
       <x-ok>
         <x-ok />
       </x-ok>
@@ -92,6 +93,19 @@ exports[`Rendering for processing instructions 1`] = `
 `;
 
 exports[`Rendering for text 1`] = `<rendering-container />`;
+
+exports[`Rest arguments Pass whatever 1`] = `
+<rendering-container>
+  <x>
+    <x-ok>
+      OK
+    </x-ok>
+    <x-ok>
+      OK
+    </x-ok>
+  </x>
+</rendering-container>
+`;
 
 exports[`Traversal based on a relative XPath query 1`] = `
 <rendering-container>

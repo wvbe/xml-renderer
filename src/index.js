@@ -63,11 +63,11 @@ class Renderer {
 	 * Returns the rendering of the specific XML node this Renderer is for.
 	 * @returns {*}
 	 */
-	render () {
+	render (...rest) {
 		const registeredContent = this[REGISTRY][GET_RENDERING_CB](this[NODE], this[MODE]);
 
 		return registeredContent ?
-			registeredContent(this) :
+			registeredContent(this, this[MODE], ...rest) :
 			null;
 	}
 
@@ -76,7 +76,7 @@ class Renderer {
 	 * @param {string} xPathQuery
 	 * @returns {Array.<*>}
 	 */
-	traverse (xPathQuery, mode = this[MODE]) {
+	traverse (xPathQuery, mode = this[MODE], ...rest) {
 		if (!xPathQuery) {
 			xPathQuery = './node()';
 		}
@@ -87,7 +87,7 @@ class Renderer {
 		}
 
 		return fontoxpath.evaluateXPathToNodes(xPathQuery, this[NODE])
-			.map(childNode => new Renderer(this[REGISTRY], mode, childNode).render());
+			.map(childNode => new Renderer(this[REGISTRY], mode, childNode).render(...rest));
 	}
 }
 
