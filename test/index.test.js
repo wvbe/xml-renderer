@@ -128,28 +128,6 @@ describe('Traversal', () => {
 	});
 });
 
-describe('Rest arguments', () => {
-	test('Pass whatever', () => {
-		const registry = new Registry(),
-			xml = `
-				<div>
-					<span>NOTOK</span>
-					<span>NOTOK</span>
-				</div>
-			`;
-
-		registry.register('self::div', renderer => (
-			<x key={ renderer.key() }>{ renderer.traverse(null, null, { skeet: 'OK' }) }</x>
-		));
-
-		registry.register('self::span', (renderer, _mode, whatever) => (
-			<x-ok key={ renderer.key() }>{ whatever.skeet }</x-ok>
-		));
-
-		expect(renderer.create(<RenderingContainer xml={ xml } registry={ registry } />).toJSON()).toMatchSnapshot();
-	});
-});
-
 describe('Modes', () => {
 	test('are usable to render out-of-order', () => {
 		const registry = new Registry(),
@@ -422,4 +400,47 @@ describe('Namespaces', () => {
 
 		expect(renderer.create(<RenderingContainer xml={ xml } registry={ registry } />).toJSON()).toMatchSnapshot();
 	})
+});
+
+describe('Rendering callback', () => {
+	it('receives name of the rendering mode', () => {
+		const registry = new Registry(),
+			xml = `
+				<div />
+			`;
+
+		registry.register('self::*', (renderer, mode) => (
+			<div key={ renderer.key() }>
+				<default-mode-name>{ mode }</default-mode-name>
+				{ renderer.traverse('.', 'some-mode') }
+			</div>
+		));
+		registry.mode('some-mode').register('self::*', (renderer, mode) => (
+			<some-mode-name key={ renderer.key() }>
+				{ mode }
+			</some-mode-name>
+		));
+
+		expect(renderer.create(<RenderingContainer xml={ xml } registry={ registry } />).toJSON()).toMatchSnapshot();
+	});
+
+	test('receives the rest arguments passed to traverse() by the parent', () => {
+		const registry = new Registry(),
+			xml = `
+				<div>
+					<span>NOTOK</span>
+					<span>NOTOK</span>
+				</div>
+			`;
+
+		registry.register('self::div', renderer => (
+			<x key={ renderer.key() }>{ renderer.traverse(null, null, { skeet: 'OK' }) }</x>
+		));
+
+		registry.register('self::span', (renderer, _mode, whatever) => (
+			<x-ok key={ renderer.key() }>{ whatever.skeet }</x-ok>
+		));
+
+		expect(renderer.create(<RenderingContainer xml={ xml } registry={ registry } />).toJSON()).toMatchSnapshot();
+	});
 });

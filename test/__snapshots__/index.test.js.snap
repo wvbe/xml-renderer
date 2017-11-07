@@ -62,6 +62,30 @@ exports[`Namespaces can be targeted by namespace URI 1`] = `
 </rendering-container>
 `;
 
+exports[`Rendering callback receives name of the rendering mode 1`] = `
+<rendering-container>
+  <div>
+    <default-mode-name />
+    <some-mode-name>
+      some-mode
+    </some-mode-name>
+  </div>
+</rendering-container>
+`;
+
+exports[`Rendering callback receives the rest arguments passed to traverse() by the parent 1`] = `
+<rendering-container>
+  <x>
+    <x-ok>
+      OK
+    </x-ok>
+    <x-ok>
+      OK
+    </x-ok>
+  </x>
+</rendering-container>
+`;
+
 exports[`Rendering for comments 1`] = `
 <rendering-container>
   <x>
@@ -93,19 +117,6 @@ exports[`Rendering for processing instructions 1`] = `
 `;
 
 exports[`Rendering for text 1`] = `<rendering-container />`;
-
-exports[`Rest arguments Pass whatever 1`] = `
-<rendering-container>
-  <x>
-    <x-ok>
-      OK
-    </x-ok>
-    <x-ok>
-      OK
-    </x-ok>
-  </x>
-</rendering-container>
-`;
 
 exports[`Traversal based on a relative XPath query 1`] = `
 <rendering-container>

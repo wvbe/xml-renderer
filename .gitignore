@@ -1,6 +1,9 @@
 # dependencies
 /node_modules
 
+# package locking
+/package-lock.json
+
 # test coverage report, which is generated
 /coverage
 

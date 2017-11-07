@@ -1,6 +1,6 @@
 // Import relevant libraries
 import XmlRenderer from 'xml-renderer';
-import { DOMParser } from 'xmldom';
+import parser from 'slimdom-sax-parser';
 
 const xr = new XmlRenderer();
 
@@ -40,7 +40,7 @@ xr.mode('footnotes').register('self::footnote', renderer => [
 ]);
 
 // Load an XML string from anywhere, and use the browser to create a DOM
-const xml = new DOMParser().parseFromString(`
+const xml = parser.sync(`
     <section>
         <paragraph>My first paragraph<footnote>This is the footnote.</footnote>.</paragraph>
         <paragraph>My second paragraph.</paragraph>
