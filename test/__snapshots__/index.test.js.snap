@@ -128,6 +128,27 @@ exports[`Traversal based on a relative XPath query 1`] = `
 </rendering-container>
 `;
 
+exports[`Traversal v2 based on a relative XPath query 1`] = `
+<rendering-container>
+  <cool-action>
+    <node>
+      div
+    </node>
+    <query>
+      
+    </query>
+    <additional-stuff>
+      {}
+    </additional-stuff>
+    <traverse>
+      <x-ok>
+        OK
+      </x-ok>
+    </traverse>
+  </cool-action>
+</rendering-container>
+`;
+
 exports[`Will use the most specific selector 1`] = `
 <rendering-container>
   <x-ok />

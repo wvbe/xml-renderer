@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+<rendering-container>
+  <x>
+    text
+  </x>
+</rendering-container>
+`;
+
+exports[`based on a relative XPath query 1`] = `
+<rendering-container>
+  <cool-action>
+    <node>
+      div
+    </node>
+    <query
+      typeof="string"
+    >
+      skkkrrah!
+    </query>
+    <additional-stuff>
+      {"fromRoot":true}
+    </additional-stuff>
+    <traverse>
+      
+      				
+      <x-ok>
+        {"fromRoot":true}
+      </x-ok>
+      
+      				
+      
+      			
+    </traverse>
+    <traverse-defaults>
+      
+      				
+      <x-ok>
+        {"fromRoot":true}
+      </x-ok>
+      
+      				
+      
+      			
+    </traverse-defaults>
+    <traverse-with-query>
+      <x-ok>
+        {"fromRoot":true}
+      </x-ok>
+    </traverse-with-query>
+    <traverse-with-query-and-extra>
+      <x-ok>
+        {"extra":true}
+      </x-ok>
+    </traverse-with-query-and-extra>
+    <traverse-with-extra>
+      
+      				
+      <x-ok>
+        {"extra":true}
+      </x-ok>
+      
+      				
+      
+      			
+    </traverse-with-extra>
+    <traverse-with-all-extra-data>
+      <x-ok>
+        {"extra":true,"fromRoot":true}
+      </x-ok>
+    </traverse-with-all-extra-data>
+  </cool-action>
+</rendering-container>
+`;
