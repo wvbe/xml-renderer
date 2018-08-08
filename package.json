@@ -18,7 +18,7 @@
     "publish",
     "xpath"
   ],
-  "main": "dist/index.js",
+  "main": "dist.es5.js",
   "directories": {
     "lib": "./src",
     "example": "./example",
@@ -26,7 +26,7 @@
   },
   "scripts": {
     "test": "jest",
-    "prepublish": "mkdir dist; babel ./src/index.js > ./dist/index.js"
+    "prepublishOnly": "babel ./src/index.js > ./dist.es5.js"
   },
   "dependencies": {
     "fontoxpath": "^2.7.1"
