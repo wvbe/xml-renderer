@@ -8,4 +8,4 @@
 /coverage
 
 # distributable file, which is generated
-/dist
+/dist.es5.js
