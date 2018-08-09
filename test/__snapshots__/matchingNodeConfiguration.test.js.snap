@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Matching node configuration on the most specific XPath test that matches 1`] = `<x-ok />`;

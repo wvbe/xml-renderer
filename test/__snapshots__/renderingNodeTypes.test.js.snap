@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Simple rendering for comments 1`] = `
+<x>
+   OK 
+</x>
+`;
+
+exports[`Simple rendering for elements 1`] = `
+<x-ok>
+  OK
+</x-ok>
+`;
+
+exports[`Simple rendering for processing instructions 1`] = `
+<x>
+  OK
+</x>
+`;
+
+exports[`Simple rendering for text 1`] = `
+<x>
+  OK
+</x>
+`;
