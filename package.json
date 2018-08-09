@@ -30,7 +30,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "fontoxpath": "^2.7.1"
+    "fontoxpath": "^2.9.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
