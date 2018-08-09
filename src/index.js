@@ -54,14 +54,14 @@ export default class Experience {
 					// the API object that is passed to whatever is rendered as a prop-like object
 					cb({
 						node: () => resultNode,
-						
+
 						key: () => Experience.getKeyForNode(resultNode),
 
 						// Convenience function
 						query: (xPathQuery, fontoxpathOptions) => fontoxpath
 							.evaluateXPath(xPathQuery, resultNode, fontoxpathOptions),
 
-						traverse: (configTraversalQuery, configAdditionalProps) => {		
+						traverse: (configTraversalQuery, configAdditionalProps) => {
 							if (typeof configTraversalQuery === 'object') {
 								configAdditionalProps = configTraversalQuery;
 							}
@@ -79,21 +79,21 @@ export default class Experience {
 
 	static getKeyForNode (targetNode) {
 		const pieces = [];
-	
+
 		let node = targetNode;
-	
+
 		while (node && node.parentNode) {
 			// If any node has an identifier, assume it to be unique and stop traversing up
 			if (node.nodeType === 1 && node.hasAttribute('id')) {
 				pieces.push(node.getAttribute('id'));
 				break;
 			}
-	
+
 			pieces.push(Array.prototype.indexOf.call(node.parentNode.childNodes, node));
-	
+
 			node = node.parentNode
 		}
-	
+
 		return pieces.reverse().join('/');
 	}
 

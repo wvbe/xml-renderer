@@ -24,25 +24,25 @@ exports[`based on a relative XPath query 1`] = `
     </additional-stuff>
     <traverse>
       
-      				
+				
       <x-ok>
         {"fromRoot":true}
       </x-ok>
       
-      				
+				
       
-      			
+			
     </traverse>
     <traverse-defaults>
       
-      				
+				
       <x-ok>
         {"fromRoot":true}
       </x-ok>
       
-      				
+				
       
-      			
+			
     </traverse-defaults>
     <traverse-with-query>
       <x-ok>
@@ -56,14 +56,14 @@ exports[`based on a relative XPath query 1`] = `
     </traverse-with-query-and-extra>
     <traverse-with-extra>
       
-      				
+				
       <x-ok>
         {"extra":true}
       </x-ok>
       
-      				
+				
       
-      			
+			
     </traverse-with-extra>
     <traverse-with-all-extra-data>
       <x-ok>
