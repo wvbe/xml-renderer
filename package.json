@@ -1,6 +1,6 @@
 {
   "name": "xml-renderer",
-  "version": "2.0.0-rc1",
+  "version": "2.0.0-rc2",
   "description": "Render XML to something awesome with this baby",
   "repository": "wvbe/xml-renderer",
   "author": {
@@ -26,8 +26,7 @@
   },
   "scripts": {
     "test": "jest --testURL http://localhost",
-    "build": "babel ./src/index.js > ./dist.es5.js",
-    "prepublishOnly": "npm run build"
+    "build": "babel ./src/index.js > ./dist.es5.js"
   },
   "dependencies": {
     "fontoxpath": "^2.9.1"

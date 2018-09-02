@@ -53,6 +53,8 @@ export default class Experience {
 				return cb ?
 					// the API object that is passed to whatever is rendered as a prop-like object
 					cb({
+						...additionalProps,
+
 						node: () => resultNode,
 
 						key: () => Experience.getKeyForNode(resultNode),
@@ -69,9 +71,7 @@ export default class Experience {
 								resultNode,
 								configTraversalQuery,
 								{ ...(configAdditionalProps || additionalProps) });
-						},
-
-						...additionalProps
+						}
 					}) :
 					null;
 			})
