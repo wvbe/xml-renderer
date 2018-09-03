@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`traverse() Just the first argument is also optional 1`] = `
+<x-ok
+  data-proof="blaat"
+>
+  <x-ok
+    data-proof="blaat"
+  >
+    Some text 
+    nodes
+     for ya
+  </x-ok>
+</x-ok>
+`;
+
+exports[`traverse() Nulling any argument becomes the default value 1`] = `
+<x-ok
+  data-proof="blaat"
+>
+  <x-ok
+    data-proof="blaat"
+  >
+    Some text 
+    nodes
+     for ya
+  </x-ok>
+</x-ok>
+`;

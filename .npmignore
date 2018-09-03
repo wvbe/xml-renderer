@@ -3,3 +3,7 @@
 /src
 /test
 /example
+
+# misc configuration files
+/.babelrc
+/.gitignore

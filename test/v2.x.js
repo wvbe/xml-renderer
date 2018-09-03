@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { sync } from 'slimdom-sax-parser';
-import Experience from '../src/index';
+import Experience from '../src/Experience';
 
 const RenderingContainer = ({ xml, registry, traversalQuery, traversalData }) => {
 	return (
