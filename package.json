@@ -26,7 +26,8 @@
   },
   "scripts": {
     "test": "jest --testURL http://localhost",
-    "build": "babel ./src/index.js > ./dist.es5.js"
+    "build": "babel ./src/Experience.js > ./dist.es5.js",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "fontoxpath": "^2.9.1"

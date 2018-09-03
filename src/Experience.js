@@ -1,6 +1,5 @@
 import * as fontoxpath from 'fontoxpath';
 
-const GET_RENDERING_CB = Symbol('rendering callback');
 const CONFIGURATION = Symbol('configuration');
 const OPTIMIZE_CONFIGURATION = Symbol('optimize configuration');
 
@@ -8,14 +7,18 @@ const CHILD_NODE_TRAVERSAL_QUERY = './node()';
 
 export default class Experience {
 	constructor (...mergeExperiences) {
-		this[CONFIGURATION] = mergeExperiences.reduce((config, experience) => config.concat(experience[CONFIGURATION]), []);
+		this[CONFIGURATION] = mergeExperiences.reduce(
+			(config, experience) => config.concat(experience[CONFIGURATION]),
+			[]);
 
 		this[OPTIMIZE_CONFIGURATION]();
 	}
+
 	[OPTIMIZE_CONFIGURATION] () {
 		this[CONFIGURATION] = this[CONFIGURATION]
 			.sort((a, b) => fontoxpath.compareSpecificity(b.xPathTest, a.xPathTest));
 	}
+
 	/**
 	 * Register a rendering callback for an XPath test. Any node matching the test (and not a more specific one)
 	 * will be transformed using onRender.
@@ -31,49 +34,47 @@ export default class Experience {
 		this[OPTIMIZE_CONFIGURATION]();
 	}
 
-	[GET_RENDERING_CB] (node) {
-		const contentComponent = this[CONFIGURATION]
-			.find(contentComponent => fontoxpath.evaluateXPathToBoolean(
-				contentComponent.xPathTest,
-				node));
-		return contentComponent && contentComponent.onRender;
-	}
-
 	render (node, traversalQuery, additionalProps) {
 		if (typeof traversalQuery === 'object') {
 			if (!additionalProps) {
 				additionalProps = traversalQuery;
 			}
-			traversalQuery = CHILD_NODE_TRAVERSAL_QUERY
+			traversalQuery = null;
 		}
 
 		return fontoxpath.evaluateXPathToNodes(traversalQuery || CHILD_NODE_TRAVERSAL_QUERY, node)
 			.map(resultNode => {
-				const cb = this[GET_RENDERING_CB](resultNode);
-				return cb ?
-					// the API object that is passed to whatever is rendered as a prop-like object
-					cb({
-						...additionalProps,
+				const contentComponent = this[CONFIGURATION]
+					.find(contentComponent => fontoxpath.evaluateXPathToBoolean(
+						contentComponent.xPathTest,
+						resultNode));
+				const onRender = contentComponent && contentComponent.onRender;
 
-						node: () => resultNode,
+				if (!onRender) {
+					return null;
+				}
+				// the API object that is passed to whatever is rendered as a prop-like object
+				return onRender({
+					...additionalProps,
 
-						key: () => Experience.getKeyForNode(resultNode),
+					node: () => resultNode,
 
-						// Convenience function
-						query: (xPathQuery, fontoxpathOptions) => fontoxpath
-							.evaluateXPath(xPathQuery, resultNode, fontoxpathOptions),
+					key: () => Experience.getKeyForNode(resultNode),
 
-						traverse: (configTraversalQuery, configAdditionalProps) => {
-							if (typeof configTraversalQuery === 'object') {
-								configAdditionalProps = configTraversalQuery;
-							}
-							return this.render(
-								resultNode,
-								configTraversalQuery,
-								{ ...(configAdditionalProps || additionalProps) });
+					// Convenience function
+					query: (xPathQuery, fontoxpathOptions) => fontoxpath
+						.evaluateXPath(xPathQuery, resultNode, fontoxpathOptions),
+
+					traverse: (configTraversalQuery, configAdditionalProps) => {
+						if (typeof configTraversalQuery === 'object') {
+							configAdditionalProps = configTraversalQuery;
 						}
-					}) :
-					null;
+						return this.render(
+							resultNode,
+							configTraversalQuery,
+							{ ...(configAdditionalProps || additionalProps) });
+					}
+				});
 			})
 	}
 
@@ -81,7 +82,6 @@ export default class Experience {
 		const pieces = [];
 
 		let node = targetNode;
-
 		while (node && node.parentNode) {
 			// If any node has an identifier, assume it to be unique and stop traversing up
 			if (node.nodeType === 1 && node.hasAttribute('id')) {

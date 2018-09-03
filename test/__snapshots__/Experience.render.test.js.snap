@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Traversal v2 Matches configuration on the most specific XPath test that matches 1`] = `<x-ok />`;
+exports[`render() Matches configuration on the most specific XPath test that matches 1`] = `<x-ok />`;
 
-exports[`Traversal v2 based on a relative XPath query 1`] = `
+exports[`render() based on a relative XPath query 1`] = `
 <rendering-container>
   <cool-action>
     <node>
