@@ -34,10 +34,10 @@ export default class Experience {
 		this[OPTIMIZE_CONFIGURATION]();
 	}
 
-	render (node, traversalQuery, additionalProps) {
+	render (node, traversalQuery, renderData) {
 		if (typeof traversalQuery === 'object') {
-			if (!additionalProps) {
-				additionalProps = traversalQuery;
+			if (!renderData) {
+				renderData = traversalQuery;
 			}
 			traversalQuery = null;
 		}
@@ -55,7 +55,7 @@ export default class Experience {
 				}
 				// the API object that is passed to whatever is rendered as a prop-like object
 				return onRender({
-					...additionalProps,
+					...renderData,
 
 					node: () => resultNode,
 
@@ -65,14 +65,17 @@ export default class Experience {
 					query: (xPathQuery, fontoxpathOptions) => fontoxpath
 						.evaluateXPath(xPathQuery, resultNode, fontoxpathOptions),
 
-					traverse: (configTraversalQuery, configAdditionalProps) => {
+					traverse: (configTraversalQuery, additionalRenderData) => {
 						if (typeof configTraversalQuery === 'object') {
-							configAdditionalProps = configTraversalQuery;
+							additionalRenderData = configTraversalQuery;
 						}
 						return this.render(
 							resultNode,
 							configTraversalQuery,
-							{ ...(configAdditionalProps || additionalProps) });
+							{
+								...renderData,
+								...additionalRenderData
+							});
 					}
 				});
 			})
