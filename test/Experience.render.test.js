@@ -3,12 +3,11 @@ import renderer from 'react-test-renderer';
 import { sync } from 'slimdom-sax-parser'
 import Experience from '../src/Experience';
 
-const RenderingContainer = ({ xml, experience, traversalQuery, traversalData }) => {
+const RenderingContainer = ({ xml, experience, traversalData }) => {
 	return (
 		<rendering-container>
 			{ experience.render(
 				sync(xml.trim()),
-				traversalQuery,
 				traversalData) }
 		</rendering-container>
 	);
@@ -16,9 +15,16 @@ const RenderingContainer = ({ xml, experience, traversalQuery, traversalData }) 
 
 const basicExperience = new Experience();
 basicExperience.register('self::node()', ({ traverse }) => traverse());
-basicExperience.register('self::text()', ({ key, node }) => node().nodeValue);
+basicExperience.register('self::text()', ({ node }) => node().nodeValue);
 
 describe('render()', () => {
+	test('Doesn\'t do much without configuration', () => {
+		const experience = new Experience();
+
+		expect(experience.render(sync(`<div />`)))
+			.toBeNull();
+	});
+
 	test('Matches configuration on the most specific XPath test that matches', () => {
 		const experience = new Experience(basicExperience);
 
@@ -43,17 +49,13 @@ describe('render()', () => {
 	});
 
 	test('based on a relative XPath query', () => {
-		const experience = new Experience(),
+		const experience = new Experience(basicExperience),
 			xml = `
 				<div>
 					<span>OK</span>
 					<span>NOTOK</span>
 				</div>
 			`;
-
-		// Previously:
-		//   experience.register('self::text()', renderer => renderer.getNode().nodeValue);
-		experience.register('self::text()', ({ traverse, node, key, query, additionalStuff }) => node().nodeValue);
 
 		experience.register('self::*[not(parent::*)]', ({ traverse, node, key, query, ...additionalStuff }) => (
 			<cool-action key={ key() }>

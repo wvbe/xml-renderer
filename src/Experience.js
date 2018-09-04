@@ -34,51 +34,41 @@ export default class Experience {
 		this[OPTIMIZE_CONFIGURATION]();
 	}
 
-	render (node, traversalQuery, renderData) {
-		if (typeof traversalQuery === 'object') {
-			if (!renderData) {
-				renderData = traversalQuery;
-			}
-			traversalQuery = null;
+	render (node, renderData) {
+		const contentComponent = this[CONFIGURATION]
+			.find(contentComponent => fontoxpath.evaluateXPathToBoolean(
+				contentComponent.xPathTest,
+				node));
+		const onRender = contentComponent && contentComponent.onRender;
+
+		if (!onRender) {
+			return null;
 		}
+		// the API object that is passed to whatever is rendered as a prop-like object
+		return onRender({
+			...renderData,
 
-		return fontoxpath.evaluateXPathToNodes(traversalQuery || CHILD_NODE_TRAVERSAL_QUERY, node)
-			.map(resultNode => {
-				const contentComponent = this[CONFIGURATION]
-					.find(contentComponent => fontoxpath.evaluateXPathToBoolean(
-						contentComponent.xPathTest,
-						resultNode));
-				const onRender = contentComponent && contentComponent.onRender;
+			node: () => node,
 
-				if (!onRender) {
-					return null;
+			key: () => Experience.getKeyForNode(node),
+
+			// Convenience function
+			query: (xPathQuery, fontoxpathOptions) => fontoxpath
+				.evaluateXPath(xPathQuery, node, fontoxpathOptions),
+
+			traverse: (configTraversalQuery, additionalRenderData) => {
+				if (configTraversalQuery && typeof configTraversalQuery === 'object') {
+					additionalRenderData = configTraversalQuery;
+					configTraversalQuery = null;
 				}
-				// the API object that is passed to whatever is rendered as a prop-like object
-				return onRender({
-					...renderData,
 
-					node: () => resultNode,
-
-					key: () => Experience.getKeyForNode(resultNode),
-
-					// Convenience function
-					query: (xPathQuery, fontoxpathOptions) => fontoxpath
-						.evaluateXPath(xPathQuery, resultNode, fontoxpathOptions),
-
-					traverse: (configTraversalQuery, additionalRenderData) => {
-						if (typeof configTraversalQuery === 'object') {
-							additionalRenderData = configTraversalQuery;
-						}
-						return this.render(
-							resultNode,
-							configTraversalQuery,
-							{
-								...renderData,
-								...additionalRenderData
-							});
-					}
-				});
-			})
+				return fontoxpath.evaluateXPathToNodes(configTraversalQuery || CHILD_NODE_TRAVERSAL_QUERY, node)
+					.map(resultNode => this.render(resultNode, {
+						...renderData,
+						...additionalRenderData
+					}));
+			}
+		});
 	}
 
 	static getKeyForNode (targetNode) {

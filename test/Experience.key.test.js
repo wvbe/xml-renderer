@@ -89,6 +89,6 @@ describe('key()', () => {
 
 		// Counts the keys starting with "OK". This test might fail while the requirements are still being met if
 		// the formatting algorithm no longer puts the identifier at the beginning of the key.
-		expect(Object.keys(keys).filter(key => key.indexOf('OK') === 0).length).toBe(4);
+		expect(Object.keys(keys).filter(key => key.includes('OK')).length).toBe(4);
 	});
 });
