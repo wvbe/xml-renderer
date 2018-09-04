@@ -4,6 +4,7 @@ import { sync } from 'slimdom-sax-parser'
 import Experience from '../src/Experience';
 
 const basicExperience = new Experience();
+basicExperience.register('self::document-node()', ({ traverse }) => traverse());
 basicExperience.register('self::node()', ({ traverse }) => traverse());
 basicExperience.register('self::text()', ({ node }) => node().nodeValue);
 
@@ -12,10 +13,10 @@ const xml = `<div some-attribute="x"><div>Some text <b>nodes</b> for ya</div></d
 describe('traverse()', () => {
 	test('Accepts query to traverse into subtree', () => {
 		const experience1 = new Experience(basicExperience);
-		experience1.register('self::div', ({ key, traverse, proof }) => (
+		experience1.register('self::div', ({ traverse }) => (
 			traverse('./div/b')
 		));
-		expect(renderer.create(experience1.render(sync(xml), { proof: 'blaat'})).toJSON())
+		expect(renderer.create(experience1.render(sync(xml))).toJSON())
 			.toBe('nodes');
 	});
 
