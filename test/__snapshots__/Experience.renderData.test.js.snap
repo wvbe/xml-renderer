@@ -3,28 +3,25 @@
 exports[`renderData should accumulate as it is passed down to traversals 1`] = `
 Array [
   Array [
-    "div",
-    "bacon",
-    0,
     Array [
-      "x",
-      "bacon",
-      0,
       Array [
-        "x",
-        "bacon",
-        1,
-      ],
-      Array [
-        "div",
-        "bacon",
-        1,
+        "with-beer",
+        Object {
+          "data1": "bacon",
+          "data2": 1,
+          "data3": "beer",
+        },
       ],
     ],
     Array [
-      "div",
-      "bacon",
-      0,
+      Array [
+        "with-eggs",
+        Object {
+          "data1": "bacon",
+          "data2": 1,
+          "data4": "eggs",
+        },
+      ],
     ],
   ],
 ]

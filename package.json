@@ -1,6 +1,6 @@
 {
   "name": "xml-renderer",
-  "version": "2.0.0-rc2",
+  "version": "2.0.0-rc3",
   "description": "Render XML to something awesome with this baby",
   "repository": "wvbe/xml-renderer",
   "author": {
