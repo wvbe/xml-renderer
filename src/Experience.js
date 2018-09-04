@@ -97,7 +97,7 @@ export default class Experience {
 			node = node.parentNode
 		}
 
-		return pieces.reverse().join('/');
+		return 'xp_' + pieces.reverse().join('_');
 	}
 
 	/**
