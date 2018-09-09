@@ -5,7 +5,16 @@ const OPTIMIZE_CONFIGURATION = Symbol('optimize configuration');
 
 const CHILD_NODE_TRAVERSAL_QUERY = './node()';
 
+/**
+ * An instance of Experience is essentially a set of rendering callbacks each attached to an XPath test, and provides
+ * the APIs to add new rendering rules and of course render an output.
+ */
 export default class Experience {
+	/**
+	 * @param {Experience}  [...mergeExperiences]  Any amount of other Experience instances that should also be part of
+	 *                                             this rule set. Allows you to reuse configurations across different
+	 *                                             rendering setups.
+	 */
 	constructor (...mergeExperiences) {
 		this[CONFIGURATION] = mergeExperiences.reduce(
 			(config, experience) => config.concat(experience[CONFIGURATION]),
@@ -22,8 +31,9 @@ export default class Experience {
 	/**
 	 * Register a rendering callback for an XPath test. Any node matching the test (and not a more specific one)
 	 * will be transformed using onRender.
-	 * @param xPathTest
-	 * @param {Mode~onRender} onRender
+	 *
+	 * @param {XPathTest}            xPathTest
+	 * @param {Experience~onRender}  onRender
 	 */
 	register (xPathTest, onRender) {
 		this[CONFIGURATION].push({
@@ -34,6 +44,15 @@ export default class Experience {
 		this[OPTIMIZE_CONFIGURATION]();
 	}
 
+	/**
+	 * Returns the rendering result for the given node and any node that its rendering rule traverses in to. Also allows
+	 * you to pass extra contextual information that ends up in a rendering callback.
+	 *
+	 * @param {Node}    node        The XML node to start rendering from
+	 * @param {object}  renderData  An object of contextual information that is passed to every rendering callback. Any
+	 *                              `key`, `node`, `traverse` or `query` property will be overwritten since those are
+	 *                              part of xml-renderer's API.
+	 */
 	render (node, renderData) {
 		const contentComponent = this[CONFIGURATION]
 			.find(contentComponent => fontoxpath.evaluateXPathToBoolean(
@@ -44,7 +63,7 @@ export default class Experience {
 		if (!onRender) {
 			return null;
 		}
-		// the API object that is passed to whatever is rendered as a prop-like object
+
 		return onRender({
 			...renderData,
 
@@ -52,14 +71,13 @@ export default class Experience {
 
 			key: () => Experience.getKeyForNode(node),
 
-			// Convenience function
 			query: (xPathQuery, fontoxpathOptions) => fontoxpath
 				.evaluateXPath(xPathQuery, node, fontoxpathOptions),
 
 			traverse: (configTraversalQuery, additionalRenderData) => {
 				if (configTraversalQuery && typeof configTraversalQuery === 'object') {
 					additionalRenderData = configTraversalQuery;
-					configTraversalQuery = null;
+					configTraversalQuery = CHILD_NODE_TRAVERSAL_QUERY;
 				}
 
 				return fontoxpath.evaluateXPathToNodes(configTraversalQuery || CHILD_NODE_TRAVERSAL_QUERY, node)
@@ -71,20 +89,28 @@ export default class Experience {
 		});
 	}
 
-	static getKeyForNode (targetNode) {
+	/**
+	 * Convenience method to get a unique, stable identifier for the given XML node. Is useful to pass to React as the
+	 * key prop, or to use as a page anchor.
+	 *
+	 * @static
+	 * @param {Node}  node
+	 * @returns {string}
+	 */
+	static getKeyForNode (node) {
 		const pieces = [];
 
-		let node = targetNode;
-		while (node && node.parentNode) {
-			// If any node has an identifier, assume it to be unique and stop traversing up
-			if (node.nodeType === 1 && node.hasAttribute('id')) {
-				pieces.push(node.getAttribute('id'));
+		let contextNode = node;
+		while (contextNode && contextNode.parentNode) {
+			// If any contextNode has an identifier, assume it to be unique and stop traversing up
+			if (contextNode.nodeType === 1 && contextNode.hasAttribute('id')) {
+				pieces.push(contextNode.getAttribute('id'));
 				break;
 			}
 
-			pieces.push(Array.prototype.indexOf.call(node.parentNode.childNodes, node));
+			pieces.push(Array.prototype.indexOf.call(contextNode.parentNode.childNodes, contextNode));
 
-			node = node.parentNode
+			contextNode = contextNode.parentNode
 		}
 
 		return 'xp_' + pieces.reverse().join('_');
@@ -92,13 +118,14 @@ export default class Experience {
 
 	/**
 	 * The callback that produces a rendering of the matching node. The callback is passed an instance of
-	 * {@link Renderer} for that node as first and only argument.
-	 * @callback Registry~onRender
+	 * {@link Experience} for that node as first and only argument.
+	 * @callback Experience~onRender
 	 * @param {Object} props
-	 * @param {function(query: XPathQuery, ...traversalData): Array.<*>} props.traverse
+	 * @param {function(query: XPathQuery, renderData: object): Array.<*>} props.traverse
 	 * @param {function(): Node} props.node
-	 * @param {function(): Node} props.key
+	 * @param {function(): string} props.key
 	 * @param {function(query: XPathQuery): *} props.query
+	 * @param {*}
 	 * @returns {*}
 	 */
 }
