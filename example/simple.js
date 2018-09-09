@@ -1,52 +1,40 @@
 import React from 'react';
-const { renderToString, renderToStaticMarkup } = require('react-dom/server')
+const { renderToStaticMarkup } = require('react-dom/server')
 import Experience from 'xml-renderer';
 import { sync } from 'slimdom-sax-parser';
 
 // A basic Experience registry. You can merge experiences together by passing them as arguments to a constructor
 const experience = new Experience();
 
-// Even the most basic XML nodes could/should be configured, such as text nodes
+// Even the most basic XML nodes could/should be configured, such as text nodes. The following line say text nodes
+// should be rendered as their text string.
 experience.register('self::text()', ({ node }) => node().nodeValue);
 
-// This configuration will match any element that does not have (a more specific) configuration. In this case,
-// unconfigured elements traverse into their children.
-experience.register('self::element()', ({ traverse }) => traverse());
+// This configuration will match any node that does not have (a more specific) configuration. Traversing to render the
+// children is a good default to have for most node types.
+experience.register('self::node()', ({ traverse }) => traverse());
 
-// Basic config to render XML <paragraph> as HTML <p>
+// Basic configuration to render XML <paragraph> as HTML <p>
 experience.register('self::paragraph', ({ key, traverse }) => (
 	<p key={ key() }>
 		{ traverse() }
 	</p>
 ));
 
-experience.register('self::horizontal-ruler', ({ key }) => (
-	<hr key={ key() } />
+// Render the first <paragraph> in bold.
+experience.register('self::paragraph[not(preceding-sibling::*)]', ({ key, traverse }) => (
+	<p key={ key() }>
+		<b>
+			{ traverse() }
+		</b>
+	</p>
 ));
 
-experience.register('self::footnote', () => (
-	'*'
-));
-
-function RenderedXml ({ xml, experience }) {
-	return experience.render(sync(xml));
-}
-
-
-
-// Render that baby
-const rendered = renderToStaticMarkup(
-	<RenderedXml
-		experience={ experience }
-		xml={`
-			<webpage>
-				<author user-id="wvbe" />
-				<paragraph>The preceding element, "author", was not <i>specifically</i> mentioned in this example yet, but it matches the XPath test for 'self::*[@user-id]'.</paragraph>
-				<horizontal-ruler />
-				<paragraph>Footnotes will be rendered as an asterisk<footnote><paragraph>But the full footnote is rendered at the bottom of a page</paragraph></footnote></paragraph>
-			</webpage>
-		`}
-	/>
-);
+const rendered = renderToStaticMarkup(experience.render(sync(`
+	<webpage>
+		<paragraph>Beep boop baap.</paragraph>
+		<paragraph>I am a robot.</paragraph>
+	</webpage>
+`)));
 
 console.log(rendered);
