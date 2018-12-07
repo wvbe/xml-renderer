@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?> <rss version="2.0" xml:base="http://www.nasa.gov/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/"> <channel> <title>Education News</title>
+ <description>A RSS feed containing the latest education related news from NASA.</description>
+ <link>http://www.nasa.gov/</link>
+ <atom:link rel="self" href="http://www.nasa.gov/rss/dyn/educationnews.rss" />
+ <language>en-us</language>
+ <managingEditor>sandra.b.may@nasa.gov</managingEditor>
+ <webMaster>brian.dunbar@nasa.gov</webMaster>
+ <item> <title>NASA Selects Universities for New Rapid Response Research Programs, Space Station Flight Opportunity</title>
+ <link>http://www.nasa.gov/feature/nasa-selects-universities-for-new-rapid-response-research-programs-space-station-flight</link>
+ <description>Research looking into resources from the Moon and Mars, improving gene testing and creating technology for advanced missions to Venus are among several projects selected to receive awards from NASA&#039;s Established Program to Stimulate Competitive Research (EPSCoR).</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/nasa-logo-web-rgb.jpg?itok=t5eZp57o" length="189751" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/feature/nasa-selects-universities-for-new-rapid-response-research-programs-space-station-flight</guid>
+ <pubDate>Thu, 15 Nov 2018 19:44 EST</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>New York Students to Speak with Astronaut Aboard Space Station</title>
+ <link>http://www.nasa.gov/press-release/new-york-students-to-speak-with-astronaut-aboard-space-station</link>
+ <description>NASA astronaut Serena Auñón-Chancellor, currently orbiting Earth as part of the International Space Station’s Expedition 57 crew, will answer questions from students at New York’s University Prep Charter High School at 11:05 a.m. EST Friday, Nov. 16.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/m18-172.jpg?itok=JBZiKOfn" length="2847432" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/press-release/new-york-students-to-speak-with-astronaut-aboard-space-station</guid>
+ <pubDate>Tue, 13 Nov 2018 16:18 EST</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>NASA Looks to University Researchers for Innovative Space Tech Solutions</title>
+ <link>http://www.nasa.gov/press-release/nasa-looks-to-university-researchers-for-innovative-space-tech-solutions</link>
+ <description>University-led research could transform the future of space exploration, from small spacecraft to “smart” systems for the Moon, Mars and beyond.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/395411main_fsw_barrel_15_full.jpg?itok=WmN_Ce41" length="56725" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/press-release/nasa-looks-to-university-researchers-for-innovative-space-tech-solutions</guid>
+ <pubDate>Thu, 08 Nov 2018 13:01 EST</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>Astronaut Michael Fincke to Visit Pittsburgh with NASA’s Destination Station</title>
+ <link>http://www.nasa.gov/press-release/astronaut-michael-fincke-to-visit-pittsburgh-with-nasa-s-destination-station</link>
+ <description>Astronaut and Pittsburgh native Michael Fincke will visit Pittsburgh as part of NASA’s Destination Station during the week of Nov. 5.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/fincke_pitt.png?itok=TSCxudb6" length="1223328" type="image/png" />
+ <guid isPermaLink="false">http://www.nasa.gov/press-release/astronaut-michael-fincke-to-visit-pittsburgh-with-nasa-s-destination-station</guid>
+ <pubDate>Wed, 31 Oct 2018 13:24 EDT</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>NASA to Welcome Visitors to Johnson Space Center Open House 2018</title>
+ <link>http://www.nasa.gov/press-release/nasa-to-welcome-visitors-to-johnson-space-center-open-house-2018</link>
+ <description>NASA’s Johnson Space Center will open its gates to the public Saturday, Oct. 27, for the first time in years, celebrating NASA’s 60th anniversary and the International Space Station’s 20th anniversary.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/jsc_oh_map_front.jpg?itok=Abcs9KR9" length="801564" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/press-release/nasa-to-welcome-visitors-to-johnson-space-center-open-house-2018</guid>
+ <pubDate>Fri, 26 Oct 2018 10:17 EDT</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>NASA’s 2018 International Space Apps Challenge Returns to Huntsville</title>
+ <link>http://www.nasa.gov/centers/marshall/news/news/releases/2018/18-040</link>
+ <description>NASA’s 2018 International Space Apps Challenge is returning to Huntsville, Alabama, for a second year Oct. 19-21. The global hackathon brings together people of all ages and backgrounds to solve real-world problems with collaborative, innovation solutions during a 48-hour period.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/fbogv2.jpg?itok=5FL_RiQL" length="599569" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/centers/marshall/news/news/releases/2018/18-040</guid>
+ <pubDate>Thu, 18 Oct 2018 14:50 EDT</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>NASA&#039;s Marshall Center to Celebrate International Observe the Moon Night Oct. 20</title>
+ <link>http://www.nasa.gov/centers/marshall/news/news/releases/2018/M18-038.html</link>
+ <description>NASA&#039;s Marshall Center will host the 8th annual International Observe the Moon Night celebration at the U.S. Space &amp; Rocket Center Oct. 20 from 5:30-8:30 p.m. CDT. Members of the public and the Huntsville-area media are invited to attend.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/82478818.j5gcjkii.jpg?itok=3DduYsCF" length="66336" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/centers/marshall/news/news/releases/2018/M18-038.html</guid>
+ <pubDate>Tue, 16 Oct 2018 15:02 EDT</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>Missouri, Colorado Students to Speak with Astronaut on Space Station</title>
+ <link>http://www.nasa.gov/press-release/missouri-colorado-students-to-speak-with-astronaut-on-space-station</link>
+ <description>Elementary school students from Missouri and Colorado will talk live with an astronaut on the International Space Station next week.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/iss056e078402.jpg?itok=Nxex05II" length="3263741" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/press-release/missouri-colorado-students-to-speak-with-astronaut-on-space-station</guid>
+ <pubDate>Fri, 12 Oct 2018 11:49 EDT</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>NASA Opens Registration for 25th Human Exploration Rover Challenge</title>
+ <link>http://www.nasa.gov/centers/marshall/news/news/releases/2018/nasa-opens-registration-for-25th-human-exploration-rover-challenge.html</link>
+ <description>Registration will open Oct. 11, 2018, for student teams to participate in the 2019 NASA Human Exploration Rover Challenge, organized by NASA&#039;s Marshall Space Flight Center in Huntsville, Alabama.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/msfc-1700312orig.jpg?itok=JLzxytBd" length="27643463" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/centers/marshall/news/news/releases/2018/nasa-opens-registration-for-25th-human-exploration-rover-challenge.html</guid>
+ <pubDate>Thu, 11 Oct 2018 09:57 EDT</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+ <item> <title>Space Station Crew Returns to Earth, Lands Safely in Kazakhstan</title>
+ <link>http://www.nasa.gov/press-release/space-station-crew-returns-to-earth-lands-safely-in-kazakhstan</link>
+ <description>Three members of the Expedition 56 crew returned safely to Earth Thursday from the International Space Station, where they spent months providing hands-on support for scientific research in low-Earth orbit, working to keep the orbiting laboratory fully operational, and performing three spacewalks.</description>
+ <enclosure url="http://www.nasa.gov/sites/default/files/styles/1x1_cardfeed/public/thumbnails/image/expedition_56_landing_181004.jpg?itok=XD-MbUCy" length="2006838" type="image/jpeg" />
+ <guid isPermaLink="false">http://www.nasa.gov/press-release/space-station-crew-returns-to-earth-lands-safely-in-kazakhstan</guid>
+ <pubDate>Thu, 04 Oct 2018 08:28 EDT</pubDate>
+ <source url="http://www.nasa.gov/rss/dyn/educationnews.rss">Education News</source>
+</item>
+</channel>
+</rss>
