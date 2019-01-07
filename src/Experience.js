@@ -5,6 +5,8 @@ const OPTIMIZE_CONFIGURATION = Symbol('optimize configuration');
 
 const CHILD_NODE_TRAVERSAL_QUERY = './node()';
 
+export { fontoxpath as xPath };
+
 /**
  * An instance of Experience is essentially a set of rendering callbacks each attached to an XPath test, and provides
  * the APIs to add new rendering rules and of course render an output.
@@ -128,4 +130,4 @@ export default class Experience {
 	 * @param {*}
 	 * @returns {*}
 	 */
-}
+};
