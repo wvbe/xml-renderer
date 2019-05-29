@@ -69,7 +69,7 @@ export default class Experience {
 
 			node: () => node,
 
-			key: () => Experience.getKeyForNode(node),
+			nodeId: Experience.getKeyForNode(node),
 
 			query: (xPathQuery, fontoxpathOptions) => fontoxpath
 				.evaluateXPath(xPathQuery, node, fontoxpathOptions),
