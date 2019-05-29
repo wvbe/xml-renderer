@@ -16,7 +16,8 @@ const RenderingContainer = ({ xml, experience, traversalQuery, traversalData }) 
 
 const basicExperience = new Experience();
 basicExperience.register('self::node()', ({ traverse }) => traverse());
-basicExperience.register('self::text()', ({ key, node }) => node().nodeValue);
+basicExperience.register('self::document-node()', ({ traverse }) => traverse());
+basicExperience.register('self::text()', ({ node }) => node.nodeValue);
 
 
 xdescribe('Custom XPath functions', () => {
@@ -30,18 +31,18 @@ xdescribe('Custom XPath functions', () => {
 				</div>
 			`;
 
-		experience.registerXPathFunction('node-name-starts-with-vowel', ['node()'], 'xs:boolean', function (domFacade, node) {
+		experience.registerXPathFunction('node-name-starts-with-vowel', ['node'], 'xs:boolean', function (domFacade, node) {
 			return 'eaouiy'.split('').includes(node.nodeName.charAt(0));
 		});
 
 		experience.register('self::element()', renderer => (
-			<x key={ key() }>
+			<x key={ nodeId }>
 				{ traverse() }
 			</x>
 		));
 
 		experience.register('self::*[node-name-starts-with-vowel(.)]', renderer => (
-			<x-ok key={ key() }>
+			<x-ok key={ nodeId }>
 				{ traverse() }
 			</x-ok>
 		));
@@ -64,7 +65,7 @@ xdescribe('Namespaces', () => {
 		experience.register('self::*', renderer => traverse());
 
 		experience.register('self::*[namespace-uri() = "namespace-1"]', renderer => (
-			<x-ok key={ key() } />
+			<x-ok key={ nodeId } />
 		));
 
 		expect(renderer.create(<RenderingContainer xml={ xml } experience={ experience } />).toJSON()).toMatchSnapshot();
@@ -79,13 +80,14 @@ xdescribe('Rendering callback', () => {
 			`;
 
 		experience.register('self::*', (renderer, mode) => (
-			<div key={ key() }>
+			<div key={ nodeId }>
 				<default-mode-name>{ mode }</default-mode-name>
 				{ traverse('.', 'some-mode') }
 			</div>
 		));
+
 		experience.mode('some-mode').register('self::*', (renderer, mode) => (
-			<some-mode-name key={ key() }>
+			<some-mode-name key={ nodeId }>
 				{ mode }
 			</some-mode-name>
 		));
@@ -103,11 +105,11 @@ xdescribe('Rendering callback', () => {
 			`;
 
 		experience.register('self::div', renderer => (
-			<x key={ key() }>{ traverse(null, null, { skeet: 'OK' }) }</x>
+			<x key={ nodeId }>{ traverse(null, null, { skeet: 'OK' }) }</x>
 		));
 
 		experience.register('self::span', (renderer, _mode, whatever) => (
-			<x-ok key={ key() }>{ whatever.skeet }</x-ok>
+			<x-ok key={ nodeId }>{ whatever.skeet }</x-ok>
 		));
 
 		expect(renderer.create(<RenderingContainer xml={ xml } experience={ experience } />).toJSON()).toMatchSnapshot();

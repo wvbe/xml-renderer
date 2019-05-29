@@ -1,6 +1,6 @@
 {
   "name": "xml-renderer",
-  "version": "2.0.1",
+  "version": "3.0.0-alpha1",
   "description": "Render XML to something awesome with this baby",
   "repository": "wvbe/xml-renderer",
   "author": {
@@ -25,7 +25,7 @@
     "test": "./test"
   },
   "scripts": {
-    "test": "jest --testURL http://localhost",
+    "test": "jest --testURL=http://localhost",
     "build": "babel ./src/Experience.js > ./dist.es5.js",
     "prepublishOnly": "npm run build"
   },
@@ -33,17 +33,15 @@
     "fontoxpath": "^3.5.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
-    "babel-cli": "^6.26.0",
     "babel-jest": "^24.8.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
     "jest": "^24.8.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-test-renderer": "^16.8.6",
-    "slimdom-sax-parser": "^1.1.1"
+    "slimdom-sax-parser": "^1.1.3"
   }
 }

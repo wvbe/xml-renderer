@@ -5,14 +5,15 @@ import Experience from '../src/Experience';
 
 const basicExperience = new Experience();
 basicExperience.register('self::node()', ({ traverse }) => traverse());
-basicExperience.register('self::text()', ({ key, node }) => node().nodeValue);
+basicExperience.register('self::document-node()', ({ traverse }) => traverse());
+basicExperience.register('self::text()', ({ node }) => node.nodeValue);
 
 describe('renderData', () => {
 	test('should accumulate as it is passed down to traversals', () => {
 		const experience = new Experience(basicExperience);
 
-		experience.register('self::element()', ({ key, traverse, node, query, ...renderData }) => [
-			node().nodeName,
+		experience.register('self::element()', ({ nodeId, traverse, node, query, ...renderData }) => [
+			node.nodeName,
 			renderData,
 			...traverse()
 		]);

@@ -3,7 +3,8 @@ import Experience from '../src/Experience';
 
 const basicExperience = new Experience();
 basicExperience.register('self::node()', ({ traverse }) => traverse());
-basicExperience.register('self::text()', ({ node }) => node().nodeValue);
+basicExperience.register('self::document-node()', ({ traverse }) => traverse());
+basicExperience.register('self::text()', ({ node }) => node.nodeValue);
 
 // Turns the keys in a node hierarchy into a key-->total mapping
 function collectKeys (nodes, stats = {}) {
@@ -16,7 +17,7 @@ function collectKeys (nodes, stats = {}) {
 	}, stats);
 }
 
-describe('key()', () => {
+describe('nodeId', () => {
 	test('is always unique', () => {
 		const experience = new Experience(basicExperience);
 		const xml = `
@@ -32,18 +33,18 @@ describe('key()', () => {
 			</div>
 		`;
 
-		experience.register('self::element()', ({ key, traverse, node }) => ({
-			key: key(),
-			nodeName: node().nodeName,
+		experience.register('self::element()', ({ nodeId, traverse, node }) => ({
+			key: nodeId,
+			nodeName: node.nodeName,
 			// If passing key down the traversal change was not ignored, every element traversed would yield the same
 			// key value and this test would fail.
-			children: traverse({ key })
+			children: traverse({ nodeId })
 		}));
 
 		const keys = collectKeys(experience.render(sync(xml)));
 
 		// If every key occurs exactly once, the amount of keys is equal to the amount of usages.
-		expect(Object.keys(keys).length).toBe(Object.keys(keys).reduce((total, key) => total + keys[key], 0));
+		expect(Object.keys(keys).length).toBe(Object.keys(keys).reduce((total, nodeId) => total + keys[nodeId], 0));
 	});
 
 	test('is stable', () => {
@@ -54,9 +55,9 @@ describe('key()', () => {
 			</div>
 		`;
 
-		experience.register('self::element()', ({ key, traverse, node }) => ({
-			key: key(),
-			nodeName: node().nodeName,
+		experience.register('self::element()', ({ nodeId, traverse, node }) => ({
+			key: nodeId,
+			nodeName: node.nodeName,
 			children: traverse()
 		}));
 
@@ -79,9 +80,9 @@ describe('key()', () => {
 			</div>
 		`;
 
-		experience.register('self::element()', ({ key, traverse, node }) => ({
-			key: key(),
-			nodeName: node().nodeName,
+		experience.register('self::element()', ({ nodeId, traverse, node }) => ({
+			key: nodeId,
+			nodeName: node.nodeName,
 			children: traverse()
 		}));
 

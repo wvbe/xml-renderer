@@ -15,7 +15,8 @@ const RenderingContainer = ({ xml, experience, traversalData }) => {
 
 const basicExperience = new Experience();
 basicExperience.register('self::node()', ({ traverse }) => traverse());
-basicExperience.register('self::text()', ({ node }) => node().nodeValue);
+basicExperience.register('self::document-node()', ({ traverse }) => traverse());
+basicExperience.register('self::text()', ({ node }) => node.nodeValue);
 
 describe('render()', () => {
 	test('Doesn\'t do much without configuration', () => {
@@ -28,20 +29,20 @@ describe('render()', () => {
 	test('Matches configuration on the most specific XPath test that matches', () => {
 		const experience = new Experience(basicExperience);
 
-		experience.register('self::div', ({ key, traverse }) => (
-			<x-notok key={ key() }>{ traverse() }</x-notok>
+		experience.register('self::div', ({ nodeId, traverse }) => (
+			<x-notok key={ nodeId }>{ traverse() }</x-notok>
 		));
 
-		experience.register('self::div[@some-attribute]', ({ key, traverse }) => (
-			<x-ok key={ key() }>{ traverse() }</x-ok>
+		experience.register('self::div[@some-attribute]', ({ nodeId, traverse }) => (
+			<x-ok key={ nodeId }>{ traverse() }</x-ok>
 		));
 
-		experience.register('self::div[@some-attribute="y"]', ({ key, traverse }) => (
-			<x-also-notok key={ key() }>{ traverse() }</x-also-notok>
+		experience.register('self::div[@some-attribute="y"]', ({ nodeId, traverse }) => (
+			<x-also-notok key={ nodeId }>{ traverse() }</x-also-notok>
 		));
 
-		experience.register('self::div', ({ key, traverse }) => (
-			<x-also-notok key={ key() }>{ traverse() }</x-also-notok>
+		experience.register('self::div', ({ nodeId, traverse }) => (
+			<x-also-notok key={ nodeId }>{ traverse() }</x-also-notok>
 		));
 
 		expect(renderer.create(experience.render(sync(`<div some-attribute="x" />`))).toJSON())
@@ -57,17 +58,17 @@ describe('render()', () => {
 				</div>
 			`;
 
-		experience.register('self::*[not(parent::*)]', ({ traverse, node, key, query, ...additionalStuff }) => (
-			<cool-action key={ key() }>
-				<node>{node().nodeName}</node>
+		experience.register('self::*[not(parent::*)]', ({ traverse, node, nodeId, query, ...additionalStuff }) => (
+			<cool-action key={ nodeId }>
+				<node>{node.nodeName}</node>
 				<query>{ query('string(./span[1]/@skr)') }</query>
 				<additional-stuff>{JSON.stringify(additionalStuff)}</additional-stuff>
 				<traverse>{ traverse('./*[1]') }</traverse>
 			</cool-action>
 		));
 
-		experience.register('self::span', ({ key, traverse }) => (
-			<x-ok key={ key() }>{ traverse() }</x-ok>
+		experience.register('self::span', ({ nodeId, traverse }) => (
+			<x-ok key={ nodeId }>{ traverse() }</x-ok>
 		));
 
 		expect(renderer.create(<RenderingContainer xml={ xml } experience={ experience } />).toJSON()).toMatchSnapshot();

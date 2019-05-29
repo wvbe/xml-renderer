@@ -7,7 +7,7 @@ xdescribe('Simple rendering', () => {
 		const experience = new Experience();
 
 		experience.register('self::element()', ({ key }) => (
-			<x-ok key={ key() }>
+			<x-ok key={ nodeId }>
 				OK
 			</x-ok>
 		));
@@ -20,10 +20,10 @@ xdescribe('Simple rendering', () => {
 	test('for text', () => {
 		const experience = new Experience();
 
-		experience.register('self::node()', ({ traverse }) => traverse());
+		experience.register('self::node() or self::document-node()', ({ traverse }) => traverse());
 
-		experience.register('self::text()', ({ key, node }) => (
-			<x key={ key() }>{ node().nodeValue }</x>
+		experience.register('self::text()', ({ nodeId, node }) => (
+			<x key={ nodeId }>{ node.nodeValue }</x>
 		));
 
 		expect(Snapshot.create(experience.render(sync(`<span>OK</span>`))).toJSON())
@@ -33,10 +33,10 @@ xdescribe('Simple rendering', () => {
 	test('for processing instructions', () => {
 		const experience = new Experience();
 
-		experience.register('self::node()', ({ traverse }) => traverse());
+		experience.register('self::node', ({ traverse }) => traverse());
 
-		experience.register('self::processing-instruction()', ({ key, node }) => (
-			<x key={ key() }>{ node().target }</x>
+		experience.register('self::processing-instruction()', ({ nodeId, node }) => (
+			<x key={ nodeId }>{ node.target }</x>
 		));
 
 		expect(Snapshot.create(experience.render(sync(`<?OK ?>`))).toJSON())
@@ -46,10 +46,10 @@ xdescribe('Simple rendering', () => {
 	test('for comments', () => {
 		const experience = new Experience();
 
-		experience.register('self::node()', ({ traverse }) => traverse());
+		experience.register('self::node', ({ traverse }) => traverse());
 
-		experience.register('self::comment()', ({ key, node }) => (
-			<x key={ key() }>{ node().data }</x>
+		experience.register('self::comment()', ({ nodeId, node }) => (
+			<x key={ nodeId }>{ node.data }</x>
 		));
 
 		expect(Snapshot.create(experience.render(sync(`<!-- OK -->`))).toJSON())

@@ -49,7 +49,8 @@ export default class Experience {
 	 * you to pass extra contextual information that ends up in a rendering callback.
 	 *
 	 * @param {Node}    node        The XML node to start rendering from
-	 * @param {object}  renderData  An object of contextual information that is passed to every rendering callback. Any
+	 * @param {object}  renderData  @TODO: Deprecate
+	 *                              An object of contextual information that is passed to every rendering callback. Any
 	 *                              `key`, `node`, `traverse` or `query` property will be overwritten since those are
 	 *                              part of xml-renderer's API.
 	 */
@@ -65,9 +66,10 @@ export default class Experience {
 		}
 
 		return onRender({
+			// @TODO: Deprecate
 			...renderData,
 
-			node: () => node,
+			node,
 
 			nodeId: Experience.getKeyForNode(node),
 
@@ -75,6 +77,8 @@ export default class Experience {
 				.evaluateXPath(xPathQuery, node, fontoxpathOptions),
 
 			traverse: (configTraversalQuery, additionalRenderData) => {
+				// renderData may occur as the first arguemtn
+				// @TODO deprecate
 				if (configTraversalQuery && typeof configTraversalQuery === 'object') {
 					additionalRenderData = configTraversalQuery;
 					configTraversalQuery = CHILD_NODE_TRAVERSAL_QUERY;

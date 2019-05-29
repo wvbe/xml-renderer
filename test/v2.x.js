@@ -16,10 +16,10 @@ const RenderingContainer = ({ xml, registry, traversalQuery, traversalData }) =>
 
 describe('Merging experiences', () => {
 	const renderTextExperience = new Experience();
-	renderTextExperience.register('self::text()', ({ node }) => node().nodeValue);
+	renderTextExperience.register('self::text()', ({ node }) => node.nodeValue);
 
 	const renderElementExperience = new Experience();
-	renderElementExperience.register('self::element()', ({ traverse, key }) => <x key={key()}>{ traverse() }</x>);
+	renderElementExperience.register('self::element()', ({ traverse, nodeId }) => <x key={nodeId}>{ traverse() }</x>);
 
 	expect(renderer.create(<RenderingContainer
 		xml={ `<div>text</div>` }
@@ -37,23 +37,23 @@ test('based on a relative XPath query', () => {
 		`;
 
 	// Previously:
-	//   registry.register('self::text()', renderer => renderer.getNode().nodeValue);
-	registry.register('self::text()', ({ traverse, node, key, query, additionalStuff }) => node().nodeValue);
+	//   registry.register('self::text()', renderer => renderer.getnode.nodeValue);
+	registry.register('self::text()', ({ traverse, node, nodeId, query, additionalStuff }) => node.nodeValue);
 
-	registry.register('self::*[not(parent::*)]', ({ traverse, node, key, query, ...additionalStuff }) => (
-		<cool-action key={ key() }>
+	registry.register('self::*[not(parent::*)]', ({ traverse, node, nodeId, query, ...additionalStuff }) => (
+		<cool-action key={ nodeId }>
 			<node>
 				{
 					// Previously:
-					//   renderer.getNode().nodeName
-					node().nodeName
+					//   renderer.getnode.nodeName
+					node.nodeName
 				}
 			</node>
 
 			<query typeof={ typeof query('string(./span[1]/@skr)') }>
 				{
 					// Previously:
-					//   fontoxpath.evaluateXPath('string(...)', renderer.getNode())
+					//   fontoxpath.evaluateXPath('string(...)', renderer.getnode)
 					query('string(./span[1]/@skr)')
 				}
 			</query>
@@ -67,7 +67,7 @@ test('based on a relative XPath query', () => {
 			</traverse>
 
 			<traverse-defaults>
-				{ traverse('./node()', additionalStuff) }
+				{ traverse('./node', additionalStuff) }
 			</traverse-defaults>
 
 			<traverse-with-query>
@@ -88,8 +88,8 @@ test('based on a relative XPath query', () => {
 		</cool-action>
 	));
 
-	registry.register('self::span[@skr]', ({ key, traverse, ...additionalStuff }) => (
-		<x-ok key={ key() }>{JSON.stringify(additionalStuff)}</x-ok>
+	registry.register('self::span[@skr]', ({ nodeId, traverse, ...additionalStuff }) => (
+		<x-ok key={ nodeId }>{JSON.stringify(additionalStuff)}</x-ok>
 	));
 
 	expect(renderer.create(<RenderingContainer

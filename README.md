@@ -1,3 +1,6 @@
+> This is an alpha version! Please use 2.0.1 as the latest stable.
+> In this alpha, the renderData will be deprecated (made redundant by React context)
+
 # xml-renderer
 
 Combines XML and XPath with _your_ components and stylesheets to render whatever in React or elsewhere. Can be used for
