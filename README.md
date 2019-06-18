@@ -24,23 +24,23 @@ Find this example code with annotations in [example/simple.js](./example/simple.
 
 ```js
 import React from 'react';
-const { renderToStaticMarkup } = require('react-dom/server')
-import Experience from 'xml-renderer';
+const { renderToStaticMarkup } = require('react-dom/server');
+import { RuleSet } from 'xml-renderer';
 import { sync } from 'slimdom-sax-parser';
 
-const experience = new Experience();
+const experience = new RuleSet();
 
-experience.register('self::text()', ({ node }) => node().nodeValue);
+experience.add('self::text()', ({ node }) => node().nodeValue);
 
-experience.register('self::node()', ({ traverse }) => traverse());
+experience.add('self::node()', ({ traverse }) => traverse());
 
-experience.register('self::paragraph', ({ key, traverse }) => (
+experience.add('self::paragraph', ({ key, traverse }) => (
 	<p key={ key() }>
 		{ traverse() }
 	</p>
 ));
 
-experience.register('self::paragraph[not(preceding-sibling::*)]', ({ key, traverse }) => (
+experience.add('self::paragraph[not(preceding-sibling::*)]', ({ key, traverse }) => (
 	<p key={ key() }>
 		<b>
 			{ traverse() }

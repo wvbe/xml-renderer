@@ -1,13 +1,13 @@
-import { sync } from 'slimdom-sax-parser'
-import Experience from '../src/Experience';
+import { sync } from 'slimdom-sax-parser';
+import { RuleSet } from '../main';
 
-const basicExperience = new Experience();
-basicExperience.register('self::node()', ({ traverse }) => traverse());
-basicExperience.register('self::document-node()', ({ traverse }) => traverse());
-basicExperience.register('self::text()', ({ node }) => node.nodeValue);
+const basicExperience = new RuleSet();
+basicExperience.add('self::node()', ({ traverse }) => traverse());
+basicExperience.add('self::document-node()', ({ traverse }) => traverse());
+basicExperience.add('self::text()', ({ node }) => node.nodeValue);
 
 // Turns the keys in a node hierarchy into a key-->total mapping
-function collectKeys (nodes, stats = {}) {
+function collectKeys(nodes, stats = {}) {
 	return nodes.reduce((stats, node) => {
 		if (node.key !== undefined) {
 			stats[node.key] = (stats[node.key] || 0) + 1;
@@ -19,7 +19,7 @@ function collectKeys (nodes, stats = {}) {
 
 describe('nodeId', () => {
 	test('is always unique', () => {
-		const experience = new Experience(basicExperience);
+		const experience = new RuleSet(basicExperience);
 		const xml = `
 			<div>
 				<div />
@@ -33,7 +33,7 @@ describe('nodeId', () => {
 			</div>
 		`;
 
-		experience.register('self::element()', ({ nodeId, traverse, node }) => ({
+		experience.add('self::element()', ({ nodeId, traverse, node }) => ({
 			key: nodeId,
 			nodeName: node.nodeName,
 			// If passing key down the traversal change was not ignored, every element traversed would yield the same
@@ -48,14 +48,14 @@ describe('nodeId', () => {
 	});
 
 	test('is stable', () => {
-		const experience = new Experience(basicExperience);
+		const experience = new RuleSet(basicExperience);
 		const xml = `
 			<div>
 				<div />
 			</div>
 		`;
 
-		experience.register('self::element()', ({ nodeId, traverse, node }) => ({
+		experience.add('self::element()', ({ nodeId, traverse, node }) => ({
 			key: nodeId,
 			nodeName: node.nodeName,
 			children: traverse()
@@ -68,7 +68,7 @@ describe('nodeId', () => {
 	});
 
 	test('reuses existing @id when found', () => {
-		const experience = new Experience(basicExperience);
+		const experience = new RuleSet(basicExperience);
 		const xml = `
 			<div>
 				<div id="OK">
@@ -80,7 +80,7 @@ describe('nodeId', () => {
 			</div>
 		`;
 
-		experience.register('self::element()', ({ nodeId, traverse, node }) => ({
+		experience.add('self::element()', ({ nodeId, traverse, node }) => ({
 			key: nodeId,
 			nodeName: node.nodeName,
 			children: traverse()
@@ -90,6 +90,6 @@ describe('nodeId', () => {
 
 		// Counts the keys starting with "OK". This test might fail while the requirements are still being met if
 		// the formatting algorithm no longer puts the identifier at the beginning of the key.
-		expect(Object.keys(keys).filter(key => key.includes('OK')).length).toBe(4);
+		expect(Object.keys(keys).filter((key) => key.includes('OK')).length).toBe(4);
 	});
 });

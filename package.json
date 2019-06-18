@@ -18,7 +18,7 @@
     "publish",
     "xpath"
   ],
-  "main": "dist.es5.js",
+  "main": "dist.js",
   "directories": {
     "lib": "./src",
     "example": "./example",
@@ -26,8 +26,9 @@
   },
   "scripts": {
     "test": "jest --testURL=http://localhost",
-    "build": "babel ./src/Experience.js > ./dist.es5.js",
-    "prepublishOnly": "npm run build"
+    "build": "babel ./main.js > ./dist.js",
+	"prepublishOnly": "npm run build",
+	"example": "npx babel example/simple.js | node"
   },
   "dependencies": {
     "fontoxpath": "^3.5.0"

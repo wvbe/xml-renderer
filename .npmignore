@@ -1,8 +1,10 @@
 /node_modules
 /coverage
-/src
 /test
 /example
+
+# source files
+/main.js
 
 # misc configuration files
 /.babelrc
