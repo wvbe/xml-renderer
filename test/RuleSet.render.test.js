@@ -16,7 +16,8 @@ describe('render()', () => {
 	test("Doesn't do much without configuration", () => {
 		const experience = new RuleSet();
 
-		expect(experience.render(sync(`<div />`))).toBeNull();
+		expect(() => experience.render(sync(`<div />`)))
+			.toThrow('There was no match for the given node');
 	});
 
 	test('Matches configuration on the most specific XPath test that matches', () => {
