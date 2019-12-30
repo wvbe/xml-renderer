@@ -1,48 +1,44 @@
 {
-  "name": "xml-renderer",
-  "version": "3.0.0-alpha.0",
-  "description": "Render XML to something awesome with this baby",
-  "repository": "wvbe/xml-renderer",
-  "author": {
-    "name": "Wybe Minnebo",
-    "email": "wybe@x-54.com",
-    "url": "https://github.com/wvbe"
-  },
-  "license": "MIT",
-  "homepage": "https://github.com/wvbe/xml-renderer",
-  "keywords": [
-    "react",
-    "xml",
-    "render",
-    "xslt",
-    "publish",
-    "xpath"
-  ],
-  "main": "dist.js",
-  "directories": {
-    "lib": "./src",
-    "example": "./example",
-    "test": "./test"
-  },
-  "scripts": {
-    "test": "jest --testURL=http://localhost",
-    "build": "babel ./main.js > ./dist.js",
-	"prepublishOnly": "npm run build",
-	"example": "npx babel example/simple.js | node"
-  },
-  "dependencies": {
-    "fontoxpath": "^3.5.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
-    "babel-jest": "^24.8.0",
-    "jest": "^24.8.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-test-renderer": "^16.8.6",
-    "slimdom-sax-parser": "^1.1.3"
-  }
+	"name": "xml-renderer",
+	"version": "3.0.0",
+	"description": "Render XML to something awesome with this baby",
+	"repository": "wvbe/xml-renderer",
+	"author": {
+		"name": "Wybe Minnebo",
+		"email": "wybe@x-54.com",
+		"url": "https://github.com/wvbe"
+	},
+	"license": "MIT",
+	"homepage": "https://github.com/wvbe/xml-renderer",
+	"keywords": [
+		"react",
+		"xml",
+		"render",
+		"xslt",
+		"publish",
+		"xpath"
+	],
+	"main": "dist.js",
+	"scripts": {
+		"build": "npx babel ./main.js > ./dist.js",
+		"example": "npx babel example.js | node",
+		"prepublishOnly": "npm run build && npm run example && npm run readme",
+		"readme": "npx documentation readme main.js --section=API",
+		"test": "jest --testURL=http://localhost"
+	},
+	"dependencies": {
+		"fontoxpath": "^3.9.2"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.7.7",
+		"@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+		"@babel/preset-env": "^7.7.7",
+		"@babel/preset-react": "^7.7.4",
+		"babel-jest": "^24.9.0",
+		"jest": "^24.9.0",
+		"react": "^16.12.0",
+		"react-dom": "^16.12.0",
+		"react-test-renderer": "^16.12.0",
+		"slimdom-sax-parser": "^1.3.0"
+	}
 }
