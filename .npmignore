@@ -1,9 +1,8 @@
 /node_modules
-/coverage
-/test
-/example
 
 # source files
+/test.js
+/example.js
 /main.js
 
 # misc configuration files
