@@ -94,15 +94,19 @@ export default class MetadataRegistry {
 	 */
 	createRenderer(factory) {
 		const metadataRegistry = this;
-		return function transform(node) {
+		return function transform(node, ...rest) {
 			const data = metadataRegistry.find(node);
 			const traverse = (query = CHILD_NODE_TRAVERSAL_QUERY) =>
 				fontoxpath.evaluateXPathToNodes(query, node).map(transform);
 
-			return factory(data, {
-				node,
-				traverse
-			});
+			return factory(
+				data,
+				{
+					node,
+					traverse
+				},
+				...rest
+			);
 		};
 	}
 
