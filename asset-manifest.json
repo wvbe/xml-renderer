@@ -1,30 +1,30 @@
 {
   "files": {
-    "main.css": "./static/css/main.0eabfc94.chunk.css",
-    "main.js": "./static/js/main.dba66d18.chunk.js",
-    "main.js.map": "./static/js/main.dba66d18.chunk.js.map",
-    "runtime-main.js": "./static/js/runtime-main.70751387.js",
-    "runtime-main.js.map": "./static/js/runtime-main.70751387.js.map",
-    "static/js/2.c30f97b6.chunk.js": "./static/js/2.c30f97b6.chunk.js",
-    "static/js/2.c30f97b6.chunk.js.map": "./static/js/2.c30f97b6.chunk.js.map",
-    "index.html": "./index.html",
-    "precache-manifest.5dbf6677ba67e11002c13605644e7a22.js": "./precache-manifest.5dbf6677ba67e11002c13605644e7a22.js",
-    "service-worker.js": "./service-worker.js",
-    "static/css/main.0eabfc94.chunk.css.map": "./static/css/main.0eabfc94.chunk.css.map",
-    "static/js/2.c30f97b6.chunk.js.LICENSE.txt": "./static/js/2.c30f97b6.chunk.js.LICENSE.txt",
-    "static/media/playshakespeare.macbeth.xml": "./static/media/playshakespeare.macbeth.4424dd24.xml",
-    "static/media/playshakespeare.midsummernightsdream.xml": "./static/media/playshakespeare.midsummernightsdream.d3953046.xml",
-    "static/media/playshakespeare.romeoandjuliet.xml": "./static/media/playshakespeare.romeoandjuliet.865e8c70.xml",
-    "static/media/playshakespeare.tempest.xml": "./static/media/playshakespeare.tempest.4a559c91.xml",
-    "static/media/w3cspec.xml.xml": "./static/media/w3cspec.xml.17ca0aae.xml",
-    "static/media/w3cspec.xpath.xml": "./static/media/w3cspec.xpath.b80a96e2.xml",
-    "static/media/w3cspec.xquery.xml": "./static/media/w3cspec.xquery.1b1b3f0a.xml",
-    "static/media/w3cspec.xquf.xml": "./static/media/w3cspec.xquf.b10eb700.xml"
+    "main.css": "/static/css/main.0eabfc94.chunk.css",
+    "main.js": "/static/js/main.2fc345e3.chunk.js",
+    "main.js.map": "/static/js/main.2fc345e3.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.41e3f362.js",
+    "runtime-main.js.map": "/static/js/runtime-main.41e3f362.js.map",
+    "static/js/2.f67e53ec.chunk.js": "/static/js/2.f67e53ec.chunk.js",
+    "static/js/2.f67e53ec.chunk.js.map": "/static/js/2.f67e53ec.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.9cfdf331900eff67b4f6ca50160c7eb8.js": "/precache-manifest.9cfdf331900eff67b4f6ca50160c7eb8.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.0eabfc94.chunk.css.map": "/static/css/main.0eabfc94.chunk.css.map",
+    "static/js/2.f67e53ec.chunk.js.LICENSE.txt": "/static/js/2.f67e53ec.chunk.js.LICENSE.txt",
+    "static/media/playshakespeare.macbeth.xml": "/static/media/playshakespeare.macbeth.33da26c0.xml",
+    "static/media/playshakespeare.midsummernightsdream.xml": "/static/media/playshakespeare.midsummernightsdream.d3953046.xml",
+    "static/media/playshakespeare.romeoandjuliet.xml": "/static/media/playshakespeare.romeoandjuliet.865e8c70.xml",
+    "static/media/playshakespeare.tempest.xml": "/static/media/playshakespeare.tempest.58148a34.xml",
+    "static/media/w3cspec.xml.xml": "/static/media/w3cspec.xml.17ca0aae.xml",
+    "static/media/w3cspec.xpath.xml": "/static/media/w3cspec.xpath.b80a96e2.xml",
+    "static/media/w3cspec.xquery.xml": "/static/media/w3cspec.xquery.1b1b3f0a.xml",
+    "static/media/w3cspec.xquf.xml": "/static/media/w3cspec.xquf.b10eb700.xml"
   },
   "entrypoints": [
-    "static/js/runtime-main.70751387.js",
-    "static/js/2.c30f97b6.chunk.js",
+    "static/js/runtime-main.41e3f362.js",
+    "static/js/2.f67e53ec.chunk.js",
     "static/css/main.0eabfc94.chunk.css",
-    "static/js/main.dba66d18.chunk.js"
+    "static/js/main.2fc345e3.chunk.js"
   ]
 }
