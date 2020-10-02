@@ -1,10 +1,10 @@
 /node_modules
 
 # source files
-/test.js
-/example.js
-/main.js
+/src
 
 # misc configuration files
-/.babelrc
 /.gitignore
+/.github
+/tsconfig.json
+/typedoc.json

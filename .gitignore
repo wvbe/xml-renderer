@@ -1,11 +1,12 @@
+# common files
+*.log
+.DS_Store
+
 # dependencies
 /node_modules
-
-# package locking
-/package-lock.json
 
 # test coverage report, which is generated
 /coverage
 
 # distributable file, which is generated
-/dist.js
+/dist

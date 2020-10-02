@@ -1,6 +1,6 @@
 {
 	"name": "xml-renderer",
-	"version": "3.0.1",
+	"version": "4.0.0",
 	"description": "Render XML to something awesome with this baby",
 	"repository": "wvbe/xml-renderer",
 	"author": {
@@ -11,34 +11,54 @@
 	"license": "MIT",
 	"homepage": "https://github.com/wvbe/xml-renderer",
 	"keywords": [
-		"react",
-		"xml",
-		"render",
-		"xslt",
 		"publish",
-		"xpath"
+		"react",
+		"render",
+		"xml",
+		"xpath",
+		"xslt"
 	],
-	"main": "dist.js",
+	"main": "dist/index.js",
+	"module": "dist/xml-renderer-ts.esm.js",
+	"typings": "dist/index.d.ts",
+	"engines": {
+		"node": ">=10"
+	},
 	"scripts": {
-		"build": "npx babel ./main.js > ./dist.js",
-		"example": "npx babel example.js | node",
-		"prepublishOnly": "npm run build && npm run example && npm run readme",
-		"readme": "npx documentation readme main.js --section=API",
-		"test": "jest --testURL=http://localhost"
+		"build": "tsdx build",
+		"lint": "tsdx lint",
+		"prepare": "tsdx build && npm run docs",
+		"start": "tsdx watch",
+		"test": "tsdx test",
+		"docs": "typedoc"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "tsdx lint && npm run docs && git add docs"
+		}
+	},
+	"prettier": {
+		"printWidth": 100,
+		"semi": true,
+		"singleQuote": true,
+		"tabWidth": 4,
+		"trailingComma": "none",
+		"useTabs": true
+	},
+	"devDependencies": {
+		"@types/react": "^16.9.49",
+		"@types/react-test-renderer": "^16.9.3",
+		"husky": "^4.3.0",
+		"react": "^16.13.1",
+		"react-test-renderer": "^16.13.1",
+		"slimdom-sax-parser": "^1.3.1",
+		"tsdx": "^0.13.3",
+		"tslib": "^2.0.1",
+		"typedoc": "^0.19.2",
+		"typedoc-plugin-markdown": "^3.0.4",
+		"typescript": "^4.0.2"
 	},
 	"dependencies": {
 		"fontoxpath": "^3.9.2"
-	},
-	"devDependencies": {
-		"@babel/cli": "^7.7.7",
-		"@babel/plugin-proposal-object-rest-spread": "^7.7.7",
-		"@babel/preset-env": "^7.7.7",
-		"@babel/preset-react": "^7.7.4",
-		"babel-jest": "^24.9.0",
-		"jest": "^24.9.0",
-		"react": "^16.12.0",
-		"react-dom": "^16.12.0",
-		"react-test-renderer": "^16.12.0",
-		"slimdom-sax-parser": "^1.3.0"
 	}
 }
