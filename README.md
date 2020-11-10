@@ -61,6 +61,6 @@ experience.add('self::webpage', ({ traverse }) => (
 
 // ReactRenderer#render returns React elements, so you can use them in React like any other JS value
 export default function MyXmlDocument({ xmlString }) {
-	return <div className="doc-or-whatever">{xp.render(React, sync(xmlString))}</div>;
+	return <div className="doc-or-whatever">{xp.render(React.createElement, sync(xmlString))}</div>;
 }
 ```
