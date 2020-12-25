@@ -33,9 +33,9 @@
 
 ### XmlRendererFactory
 
-Ƭ  **XmlRendererFactory**\<T, U>: (value: T \| undefined,props: [XmlRendererProps](README.md#xmlrendererprops)\<U>,...rest: [XmlRendererRestArguments](README.md#xmlrendererrestarguments)) => U
+Ƭ  **XmlRendererFactory**<T, U\>: (value: T \| undefined, props: [XmlRendererProps](README.md#xmlrendererprops)<U\>, ...rest: [XmlRendererRestArguments](README.md#xmlrendererrestarguments)) => U
 
-*Defined in [GenericRenderer.ts:38](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/GenericRenderer.ts#L38)*
+*Defined in [GenericRenderer.ts:38](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/GenericRenderer.ts#L38)*
 
 A compatibility layer between the renderer and React or another templating engine. Is given the metadata registered
 to the node that being traversed (as well as the node itself and a means to continue traversal), so that this
@@ -55,9 +55,9 @@ ___
 
 ### XmlRendererProps
 
-Ƭ  **XmlRendererProps**\<U>: { node: Node ; traverse: [XmlRendererTraverse](README.md#xmlrenderertraverse)\<U>  }
+Ƭ  **XmlRendererProps**<U\>: { node: Node ; traverse: [XmlRendererTraverse](README.md#xmlrenderertraverse)<U\>  }
 
-*Defined in [GenericRenderer.ts:19](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/GenericRenderer.ts#L19)*
+*Defined in [GenericRenderer.ts:19](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/GenericRenderer.ts#L19)*
 
 The renderer context information, in React passed as props, given to every rule match. The two props that are always
 passed are `node` (the XML node for which the rule is being invoked) and `traverse` (a function to continue rendering
@@ -76,15 +76,15 @@ Name |
 Name | Type |
 ------ | ------ |
 `node` | Node |
-`traverse` | [XmlRendererTraverse](README.md#xmlrenderertraverse)\<U> |
+`traverse` | [XmlRendererTraverse](README.md#xmlrenderertraverse)<U\> |
 
 ___
 
 ### XmlRendererReactInput
 
-Ƭ  **XmlRendererReactInput**: ElementType\<[XmlRendererReactProps](README.md#xmlrendererreactprops)>
+Ƭ  **XmlRendererReactInput**: ElementType<[XmlRendererReactProps](README.md#xmlrendererreactprops)\>
 
-*Defined in [ReactRenderer.ts:23](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/ReactRenderer.ts#L23)*
+*Defined in [ReactRenderer.ts:23](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/ReactRenderer.ts#L23)*
 
 The thing that you give to [ReactRenderer.add](classes/reactrenderer.md#add) should be a React component class or function component. It is
 given two props by xml-renderer automatically, `node` and `traverse`; see also [XmlRendererReactProps](README.md#xmlrendererreactprops).
@@ -93,9 +93,9 @@ ___
 
 ### XmlRendererReactOutput
 
-Ƭ  **XmlRendererReactOutput**: ReactElement\<any, any> \| string \| null
+Ƭ  **XmlRendererReactOutput**: ReactElement<any, any\> \| string \| null
 
-*Defined in [ReactRenderer.ts:10](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/ReactRenderer.ts#L10)*
+*Defined in [ReactRenderer.ts:10](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/ReactRenderer.ts#L10)*
 
 The output of a ReactRenderer rule should be a React element (eg. `<p>` or `<P>`), a string, or `null`.
 
@@ -103,9 +103,9 @@ ___
 
 ### XmlRendererReactProps
 
-Ƭ  **XmlRendererReactProps**: [XmlRendererProps](README.md#xmlrendererprops)\<[XmlRendererReactOutput](README.md#xmlrendererreactoutput)> & { key: string  }
+Ƭ  **XmlRendererReactProps**: [XmlRendererProps](README.md#xmlrendererprops)<[XmlRendererReactOutput](README.md#xmlrendererreactoutput)\> & { key: string  }
 
-*Defined in [ReactRenderer.ts:17](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/ReactRenderer.ts#L17)*
+*Defined in [ReactRenderer.ts:17](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/ReactRenderer.ts#L17)*
 
 The props that are passed to every component rendered by ReactRenderer. These include the `node` and `traverse`
 props, so that you can query and travel further into the render loop, but also `key` for your convenience, because
@@ -117,7 +117,7 @@ ___
 
 Ƭ  **XmlRendererRestArguments**: any[]
 
-*Defined in [GenericRenderer.ts:28](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/GenericRenderer.ts#L28)*
+*Defined in [GenericRenderer.ts:28](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/GenericRenderer.ts#L28)*
 
 Additional arguments that can be passed down to a renderer callbacks when calling the renderer.
 
@@ -127,9 +127,9 @@ ___
 
 ### XmlRendererSet
 
-Ƭ  **XmlRendererSet**\<T>: { test: [XmlRendererTest](README.md#xmlrenderertest) ; value: T  }
+Ƭ  **XmlRendererSet**<T\>: { test: [XmlRendererTest](README.md#xmlrenderertest) ; value: T  }
 
-*Defined in [Registry.ts:13](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/Registry.ts#L13)*
+*Defined in [Registry.ts:13](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/Registry.ts#L13)*
 
 The metadata associated with nodes that match the correlating test. This metadata value is normally a component
 (rendering to React) or another type of function, but is not actually limited to any type.
@@ -153,7 +153,7 @@ ___
 
 Ƭ  **XmlRendererTest**: string
 
-*Defined in [Registry.ts:7](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/Registry.ts#L7)*
+*Defined in [Registry.ts:7](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/Registry.ts#L7)*
 
 An XPath expression that must evaluate to truthy or falsy for a given node, which determines wether or not the
 metadata value associated with the test applies.
@@ -162,9 +162,9 @@ ___
 
 ### XmlRendererTraverse
 
-Ƭ  **XmlRendererTraverse**\<U>: (query?: undefined \| string) => U[]
+Ƭ  **XmlRendererTraverse**<U\>: (query?: undefined \| string) => U[]
 
-*Defined in [GenericRenderer.ts:10](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/GenericRenderer.ts#L10)*
+*Defined in [GenericRenderer.ts:10](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/GenericRenderer.ts#L10)*
 
 A function that lets you traverse rendering down into child nodes (default) or another selection of nodes. By default
 it will simply traverse into the child nodes of the context node. By passing an XPath expression to `traverse` you
@@ -180,9 +180,9 @@ Name |
 
 ### getKeyForNode
 
-▸ **getKeyForNode**(`node`: Node & { getAttribute?: undefined \| (name: string) => string ; hasAttribute?: undefined \| (name: string) => boolean  }, `identifierAttribute`: string): string
+▸ **getKeyForNode**(`node`: Node & { getAttribute?: undefined \| (name: string) => string ; hasAttribute?: undefined \| (name: string) => boolean  }, `identifierAttribute?`: string): string
 
-*Defined in [getKeyForNode.ts:5](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/getKeyForNode.ts#L5)*
+*Defined in [getKeyForNode.ts:5](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/getKeyForNode.ts#L5)*
 
 Utility function to generate a unique key for a given node. Is automatically used as the `key` prop in case you're
 using {@link Registry.createReactRenderer}, but you may find it useful in other scenarios too.
@@ -200,9 +200,9 @@ ___
 
 ### traverseRenderer
 
-▸ **traverseRenderer**\<T, U>(`registry`: [Registry](classes/registry.md)\<T>, `factory`: [XmlRendererFactory](README.md#xmlrendererfactory)\<T, U>, `node`: Node, ...`rest`: [XmlRendererRestArguments](README.md#xmlrendererrestarguments)): U
+▸ **traverseRenderer**<T, U\>(`registry`: [Registry](classes/registry.md)<T\>, `factory`: [XmlRendererFactory](README.md#xmlrendererfactory)<T, U\>, `node`: Node, ...`rest`: [XmlRendererRestArguments](README.md#xmlrendererrestarguments)): U
 
-*Defined in [GenericRenderer.ts:49](https://github.com/wvbe/xml-renderer/blob/c56acc8/src/GenericRenderer.ts#L49)*
+*Defined in [GenericRenderer.ts:49](https://github.com/wvbe/xml-renderer/blob/d46ed04/src/GenericRenderer.ts#L49)*
 
 #### Type parameters:
 
@@ -215,8 +215,8 @@ Name |
 
 Name | Type |
 ------ | ------ |
-`registry` | [Registry](classes/registry.md)\<T> |
-`factory` | [XmlRendererFactory](README.md#xmlrendererfactory)\<T, U> |
+`registry` | [Registry](classes/registry.md)<T\> |
+`factory` | [XmlRendererFactory](README.md#xmlrendererfactory)<T, U\> |
 `node` | Node |
 `...rest` | [XmlRendererRestArguments](README.md#xmlrendererrestarguments) |
 
