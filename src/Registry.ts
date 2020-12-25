@@ -47,9 +47,15 @@ export class Registry<T> {
 	 * yield any different results.
 	 */
 	private optimize(): void {
-		this.sets = this.sets.sort((setRight, setLeft) =>
-			compareSpecificity(setLeft.test, setRight.test)
-		);
+		this.sets = this.sets
+			// Sort alphabetically by test to get a consistent sorting even if selectors are equally specific
+			.sort((setLeft, setRight) => setLeft.test.localeCompare(setRight.test))
+			// Sort by descreasing specificity as determined by fontoxpath
+			.sort((setLeft, setRight) => compareSpecificity(setRight.test, setLeft.test));
+	}
+
+	public get length() {
+		return this.sets.length;
 	}
 
 	/**
@@ -57,7 +63,11 @@ export class Registry<T> {
 	 */
 	public merge(...sets: Registry<T>[]): void {
 		this.sets = sets.reduce(
-			(sets: XmlRendererSet<T>[], registry) => sets.concat(registry.sets),
+			(sets: XmlRendererSet<T>[], registry) =>
+				sets
+					// Remove any duplicates from the pre-existing set
+					.filter(set => !registry.sets.some(s => s.test === set.test))
+					.concat(registry.sets),
 			this.sets
 		);
 
@@ -69,7 +79,12 @@ export class Registry<T> {
 	 */
 	public add(test: XmlRendererTest, value: T): void {
 		if (value === undefined) {
-			return;
+			throw new TypeError('Required to pass a value when adding to registry.');
+		}
+		if (this.sets.some(set => set.test === test)) {
+			throw new TypeError(
+				'Refusing to add a selector in duplicate, use #overwrite() instead.'
+			);
 		}
 		this.sets.push({
 			test,
@@ -78,12 +93,29 @@ export class Registry<T> {
 
 		this.optimize();
 	}
+	public overwrite(test: XmlRendererTest, value: T): void {
+		if (value === undefined) {
+			throw new TypeError(
+				'Required to pass a value when overwriting to registry, use #remove() instead.'
+			);
+		}
+		const index = this.sets.findIndex(set => set.test === test);
+		if (index < 0) {
+			throw new TypeError(
+				'Refusing to overwrite a selector because it was never set before.'
+			);
+		}
+		this.sets.splice(index, 1, {
+			test,
+			value
+		});
+	}
 
 	/**
 	 * Remove a test/value set from the registry. This is the opposite of the {@link Registry.add} method.
 	 */
-	public remove(test: XmlRendererTest, value: T): boolean {
-		const index = this.sets.findIndex(set => set.test === test && set.value === value);
+	public remove(test: XmlRendererTest): boolean {
+		const index = this.sets.findIndex(set => set.test === test);
 		if (index < 0) {
 			return false;
 		}
