@@ -2,6 +2,7 @@
 
 # source files
 /src
+/coverage
 
 # misc configuration files
 /.gitignore
