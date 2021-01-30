@@ -1,6 +1,6 @@
 {
 	"name": "xml-renderer",
-	"version": "4.0.2",
+	"version": "4.0.3",
 	"description": "An npm/browser module for easy matching XML and XPath to React Components and other stuff",
 	"repository": "wvbe/xml-renderer",
 	"author": {

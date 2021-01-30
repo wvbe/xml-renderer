@@ -26,11 +26,11 @@ export type XmlRendererReactInput = ElementType<XmlRendererReactProps>;
  *
  * This is the React-specific sibling of {@link GenericRenderer}.
  */
-export class ReactRenderer extends Registry<XmlRendererReactInput> {
+export class ReactRenderer<P extends {} = {}> extends Registry<XmlRendererReactInput> {
 	public render(
 		createElement: typeof CreateElement,
 		node: Node,
-		additionalProps?: object
+		additionalProps?: P
 	): XmlRendererReactOutput {
 		return traverseRenderer<XmlRendererReactInput, XmlRendererReactOutput>(
 			this,
@@ -39,11 +39,12 @@ export class ReactRenderer extends Registry<XmlRendererReactInput> {
 				props: XmlRendererProps<XmlRendererReactOutput>
 			) =>
 				Component
-					? createElement(Component, {
-							...props,
-							...additionalProps,
-							key: getKeyForNode(props.node)
-					  })
+					? createElement(
+							Component,
+							Object.assign(props, additionalProps, {
+								key: getKeyForNode(props.node)
+							})
+					  )
 					: // Returning null appears to conflict with what this factory function is supposed to do; return
 					  // XmlRendererReactOutput or null if no component was found.
 					  //
