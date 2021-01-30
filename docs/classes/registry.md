@@ -42,7 +42,7 @@ Name |
 
 \+ **new Registry**(...`sets`: [Registry](registry.md)<T\>[]): [Registry](registry.md)
 
-*Defined in [Registry.ts:23](https://github.com/wvbe/xml-renderer/blob/47358b4/src/Registry.ts#L23)*
+*Defined in [Registry.ts:23](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L23)*
 
 A class that you instantiate to contain "metadata" associated with certain XML nodes. The metadata could be anything,
 but in context of being an "xml renderer" you'll probably want to use it for templates or React components.
@@ -67,7 +67,7 @@ Name | Type |
 
 • get **length**(): number
 
-*Defined in [Registry.ts:57](https://github.com/wvbe/xml-renderer/blob/47358b4/src/Registry.ts#L57)*
+*Defined in [Registry.ts:57](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L57)*
 
 **Returns:** number
 
@@ -77,7 +77,7 @@ Name | Type |
 
 ▸ **add**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: T): void
 
-*Defined in [Registry.ts:80](https://github.com/wvbe/xml-renderer/blob/47358b4/src/Registry.ts#L80)*
+*Defined in [Registry.ts:80](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L80)*
 
 Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 
@@ -96,7 +96,7 @@ ___
 
 ▸ **find**(`node`: Node): T \| undefined
 
-*Defined in [Registry.ts:130](https://github.com/wvbe/xml-renderer/blob/47358b4/src/Registry.ts#L130)*
+*Defined in [Registry.ts:130](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L130)*
 
 Retrieve the metadata that was associated with this node before. If there are several rules that match, `.find`
 gives you only the value of the best match.
@@ -115,7 +115,7 @@ ___
 
 ▸ **merge**(...`sets`: [Registry](registry.md)<T\>[]): void
 
-*Defined in [Registry.ts:64](https://github.com/wvbe/xml-renderer/blob/47358b4/src/Registry.ts#L64)*
+*Defined in [Registry.ts:64](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L64)*
 
 Merges other registry instances into this one, and optimizes ({@link Registry.optimize}) when done.
 
@@ -133,7 +133,7 @@ ___
 
 ▸ **overwrite**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: T): void
 
-*Defined in [Registry.ts:96](https://github.com/wvbe/xml-renderer/blob/47358b4/src/Registry.ts#L96)*
+*Defined in [Registry.ts:96](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L96)*
 
 #### Parameters:
 
@@ -150,7 +150,7 @@ ___
 
 ▸ **remove**(`test`: [XmlRendererTest](../README.md#xmlrenderertest)): boolean
 
-*Defined in [Registry.ts:117](https://github.com/wvbe/xml-renderer/blob/47358b4/src/Registry.ts#L117)*
+*Defined in [Registry.ts:117](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L117)*
 
 Remove a test/value set from the registry. This is the opposite of the [Registry.add](registry.md#add) method.
 

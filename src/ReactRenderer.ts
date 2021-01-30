@@ -20,22 +20,24 @@ export type XmlRendererReactProps = XmlRendererProps<XmlRendererReactOutput> & {
  * The thing that you give to {@link ReactRenderer.add} should be a React component class or function component. It is
  * given two props by xml-renderer automatically, `node` and `traverse`; see also {@link XmlRendererReactProps}.
  */
-export type XmlRendererReactInput = ElementType<XmlRendererReactProps>;
+// export type ElementType<XmlRendererReactProps & P> = ElementType<XmlRendererReactProps & P>;
 
 /**
  *
  * This is the React-specific sibling of {@link GenericRenderer}.
  */
-export class ReactRenderer<P extends {} = {}> extends Registry<XmlRendererReactInput> {
+export class ReactRenderer<P extends {} = {}> extends Registry<
+	ElementType<XmlRendererReactProps & P>
+> {
 	public render(
 		createElement: typeof CreateElement,
 		node: Node,
 		additionalProps?: P
 	): XmlRendererReactOutput {
-		return traverseRenderer<XmlRendererReactInput, XmlRendererReactOutput>(
+		return traverseRenderer<ElementType<XmlRendererReactProps & P>, XmlRendererReactOutput>(
 			this,
 			(
-				Component: XmlRendererReactInput | undefined,
+				Component: ElementType<XmlRendererReactProps & P> | undefined,
 				props: XmlRendererProps<XmlRendererReactOutput>
 			) =>
 				Component
