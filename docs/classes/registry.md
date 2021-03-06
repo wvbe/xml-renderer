@@ -2,13 +2,13 @@
 
 > [Globals](../README.md) / Registry
 
-# Class: Registry<T\>
+# Class: Registry<ValueI\>
 
 ## Type parameters
 
 Name |
 ------ |
-`T` |
+`ValueI` |
 
 ## Hierarchy
 
@@ -40,9 +40,9 @@ Name |
 
 ### constructor
 
-\+ **new Registry**(...`sets`: [Registry](registry.md)<T\>[]): [Registry](registry.md)
+\+ **new Registry**(...`sets`: [Registry](registry.md)<ValueI\>[]): [Registry](registry.md)
 
-*Defined in [Registry.ts:23](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L23)*
+*Defined in [Registry.ts:23](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L23)*
 
 A class that you instantiate to contain "metadata" associated with certain XML nodes. The metadata could be anything,
 but in context of being an "xml renderer" you'll probably want to use it for templates or React components.
@@ -57,7 +57,7 @@ use the metadata associated the most specific test that matches the node.
 
 Name | Type |
 ------ | ------ |
-`...sets` | [Registry](registry.md)<T\>[] |
+`...sets` | [Registry](registry.md)<ValueI\>[] |
 
 **Returns:** [Registry](registry.md)
 
@@ -67,7 +67,7 @@ Name | Type |
 
 • get **length**(): number
 
-*Defined in [Registry.ts:57](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L57)*
+*Defined in [Registry.ts:57](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L57)*
 
 **Returns:** number
 
@@ -75,9 +75,9 @@ Name | Type |
 
 ### add
 
-▸ **add**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: T): void
+▸ **add**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: ValueI): void
 
-*Defined in [Registry.ts:80](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L80)*
+*Defined in [Registry.ts:80](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L80)*
 
 Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 
@@ -86,7 +86,7 @@ Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 Name | Type |
 ------ | ------ |
 `test` | [XmlRendererTest](../README.md#xmlrenderertest) |
-`value` | T |
+`value` | ValueI |
 
 **Returns:** void
 
@@ -94,9 +94,9 @@ ___
 
 ### find
 
-▸ **find**(`node`: Node): T \| undefined
+▸ **find**(`node`: Node): ValueI \| undefined
 
-*Defined in [Registry.ts:130](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L130)*
+*Defined in [Registry.ts:135](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L135)*
 
 Retrieve the metadata that was associated with this node before. If there are several rules that match, `.find`
 gives you only the value of the best match.
@@ -107,15 +107,15 @@ Name | Type |
 ------ | ------ |
 `node` | Node |
 
-**Returns:** T \| undefined
+**Returns:** ValueI \| undefined
 
 ___
 
 ### merge
 
-▸ **merge**(...`sets`: [Registry](registry.md)<T\>[]): void
+▸ **merge**(...`sets`: [Registry](registry.md)<ValueI\>[]): void
 
-*Defined in [Registry.ts:64](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L64)*
+*Defined in [Registry.ts:64](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L64)*
 
 Merges other registry instances into this one, and optimizes ({@link Registry.optimize}) when done.
 
@@ -123,7 +123,7 @@ Merges other registry instances into this one, and optimizes ({@link Registry.op
 
 Name | Type |
 ------ | ------ |
-`...sets` | [Registry](registry.md)<T\>[] |
+`...sets` | [Registry](registry.md)<ValueI\>[] |
 
 **Returns:** void
 
@@ -131,16 +131,16 @@ ___
 
 ### overwrite
 
-▸ **overwrite**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: T): void
+▸ **overwrite**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: ValueI): void
 
-*Defined in [Registry.ts:96](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L96)*
+*Defined in [Registry.ts:99](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L99)*
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
 `test` | [XmlRendererTest](../README.md#xmlrenderertest) |
-`value` | T |
+`value` | ValueI |
 
 **Returns:** void
 
@@ -150,7 +150,7 @@ ___
 
 ▸ **remove**(`test`: [XmlRendererTest](../README.md#xmlrenderertest)): boolean
 
-*Defined in [Registry.ts:117](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L117)*
+*Defined in [Registry.ts:122](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L122)*
 
 Remove a test/value set from the registry. This is the opposite of the [Registry.add](registry.md#add) method.
 

@@ -10,17 +10,17 @@ export type XmlRendererTest = string;
  * The metadata associated with nodes that match the correlating test. This metadata value is normally a component
  * (rendering to React) or another type of function, but is not actually limited to any type.
  */
-export type XmlRendererSet<T> = {
+export type XmlRendererSet<ValueI> = {
 	test: XmlRendererTest;
-	value: T;
+	value: ValueI;
 };
 
-export class Registry<T> {
+export class Registry<ValueI> {
 	/**
 	 * All test/value sets known to this registery. Is kept in descending order of test specificity because {@link
 	 * Registry.optimize} is always called when modifying this set through public methods.
 	 */
-	private sets: XmlRendererSet<T>[] = [];
+	private sets: XmlRendererSet<ValueI>[] = [];
 
 	/**
 	 * A class that you instantiate to contain "metadata" associated with certain XML nodes. The metadata could be anything,
@@ -32,7 +32,7 @@ export class Registry<T> {
 	 * Render functions (metadata) are associated with XML nodes via an XPath test. For any given node, the renderer will
 	 * use the metadata associated the most specific test that matches the node.
 	 */
-	constructor(...sets: Registry<T>[]) {
+	constructor(...sets: Registry<ValueI>[]) {
 		this.merge(...sets);
 	}
 
@@ -61,9 +61,9 @@ export class Registry<T> {
 	/**
 	 * Merges other registry instances into this one, and optimizes ({@link Registry.optimize}) when done.
 	 */
-	public merge(...sets: Registry<T>[]): void {
+	public merge(...sets: Registry<ValueI>[]): void {
 		this.sets = sets.reduce(
-			(sets: XmlRendererSet<T>[], registry) =>
+			(sets: XmlRendererSet<ValueI>[], registry) =>
 				sets
 					// Remove any duplicates from the pre-existing set
 					.filter(set => !registry.sets.some(s => s.test === set.test))
@@ -77,13 +77,16 @@ export class Registry<T> {
 	/**
 	 * Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 	 */
-	public add(test: XmlRendererTest, value: T): void {
+	public add(test: XmlRendererTest, value: ValueI): void {
 		if (value === undefined) {
-			throw new TypeError('Required to pass a value when adding to registry.');
+			throw new TypeError(
+				'Required to pass a value when adding to registry for selector: ' + test
+			);
 		}
 		if (this.sets.some(set => set.test === test)) {
 			throw new TypeError(
-				'Refusing to add a selector in duplicate, use #overwrite() instead.'
+				'Refusing to add a selector in duplicate, use #overwrite() instead, for selector: ' +
+					test
 			);
 		}
 		this.sets.push({
@@ -93,16 +96,18 @@ export class Registry<T> {
 
 		this.optimize();
 	}
-	public overwrite(test: XmlRendererTest, value: T): void {
+	public overwrite(test: XmlRendererTest, value: ValueI): void {
 		if (value === undefined) {
 			throw new TypeError(
-				'Required to pass a value when overwriting to registry, use #remove() instead.'
+				'Required to pass a value when overwriting to registry, use #remove() instead, for selector: ' +
+					test
 			);
 		}
 		const index = this.sets.findIndex(set => set.test === test);
 		if (index < 0) {
 			throw new TypeError(
-				'Refusing to overwrite a selector because it was never set before.'
+				'Refusing to overwrite a selector because it was never set before, for selector: ' +
+					test
 			);
 		}
 		this.sets.splice(index, 1, {
@@ -127,7 +132,7 @@ export class Registry<T> {
 	 * Retrieve the metadata that was associated with this node before. If there are several rules that match, `.find`
 	 * gives you only the value of the best match.
 	 */
-	public find(node: Node): T | undefined {
+	public find(node: Node): ValueI | undefined {
 		const set = this.sets.find(set => evaluateXPathToBoolean(set.test, node));
 
 		return set?.value;

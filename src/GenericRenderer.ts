@@ -7,7 +7,7 @@ import { Registry } from './Registry';
  * it will simply traverse into the child nodes of the context node. By passing an XPath expression to `traverse` you
  * can change that to select any related node.
  */
-export type XmlRendererTraverse<U> = (query?: string) => U[];
+export type XmlRendererTraverse<OutpuI> = (query?: string) => OutpuI[];
 
 /**
  * The renderer context information, in React passed as props, given to every rule match. The two props that are always
@@ -16,9 +16,9 @@ export type XmlRendererTraverse<U> = (query?: string) => U[];
  *
  * See also {@link XmlRendererTraverse}.
  */
-export type XmlRendererProps<U> = {
+export type XmlRendererProps<OutputI> = {
 	node: Node;
-	traverse: XmlRendererTraverse<U>;
+	traverse: XmlRendererTraverse<OutputI>;
 };
 
 /**
@@ -35,29 +35,29 @@ export type XmlRendererRestArguments = any[];
  * For the {@link ReactRenderer} this factory is already provided, where it is essentially a wrapper around
  * `React.createElement`.
  */
-export type XmlRendererFactory<T, U> = (
+export type XmlRendererFactory<ValueI, OutputI> = (
 	// For ReactRenderer, `value` means the component associated to a context node
-	value: T | undefined,
+	value: ValueI | undefined,
 
 	// Contains the context node, and a function to travere the renderer
-	props: XmlRendererProps<U>,
+	props: XmlRendererProps<OutputI>,
 
 	// @todo deprecate
 	...rest: XmlRendererRestArguments
-) => U;
+) => OutputI;
 
-export function traverseRenderer<T, U>(
-	registry: Registry<T>,
-	factory: XmlRendererFactory<T, U>,
+export function traverseRenderer<ValueI, OutputI>(
+	registry: Registry<ValueI>,
+	factory: XmlRendererFactory<ValueI, OutputI>,
 	node: Node,
 	...rest: XmlRendererRestArguments
-): U {
+): OutputI {
 	const value = registry.find(node);
 	const props = {
 		node,
 		traverse: (query = './node()') =>
 			evaluateXPathToNodes(query, node).map(n =>
-				traverseRenderer<T, U>(registry, factory, n as Node, ...rest)
+				traverseRenderer<ValueI, OutputI>(registry, factory, n as Node, ...rest)
 			)
 	};
 
@@ -70,12 +70,12 @@ export function traverseRenderer<T, U>(
  *
  * This is the more generic sibling of {@link ReactRenderer}.
  */
-export class GenericRenderer<T, U> extends Registry<T> {
+export class GenericRenderer<ValueI, OutputI> extends Registry<ValueI> {
 	public render(
-		factory: XmlRendererFactory<T, U>,
+		factory: XmlRendererFactory<ValueI, OutputI>,
 		node: Node,
 		...rest: XmlRendererRestArguments
-	): U {
-		return traverseRenderer<T, U>(this, factory, node, ...rest);
+	): OutputI {
+		return traverseRenderer<ValueI, OutputI>(this, factory, node, ...rest);
 	}
 }

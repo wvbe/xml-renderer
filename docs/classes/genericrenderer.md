@@ -2,7 +2,7 @@
 
 > [Globals](../README.md) / GenericRenderer
 
-# Class: GenericRenderer<T, U\>
+# Class: GenericRenderer<ValueI, OutputI\>
 
 A renderer that makes no presumptions on the type of output you want. Using the `factory` argument of [GenericRenderer.render](genericrenderer.md#render) it can be made to output anything, such as a long concatenated string or maybe JSONML.
 
@@ -12,12 +12,12 @@ This is the more generic sibling of [ReactRenderer](reactrenderer.md).
 
 Name |
 ------ |
-`T` |
-`U` |
+`ValueI` |
+`OutputI` |
 
 ## Hierarchy
 
-* [Registry](registry.md)<T\>
+* [Registry](registry.md)<ValueI\>
 
   ↳ **GenericRenderer**
 
@@ -44,11 +44,11 @@ Name |
 
 ### constructor
 
-\+ **new GenericRenderer**(...`sets`: [Registry](registry.md)<T\>[]): [GenericRenderer](genericrenderer.md)
+\+ **new GenericRenderer**(...`sets`: [Registry](registry.md)<ValueI\>[]): [GenericRenderer](genericrenderer.md)
 
 *Inherited from [Registry](registry.md).[constructor](registry.md#constructor)*
 
-*Defined in [Registry.ts:23](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L23)*
+*Defined in [Registry.ts:23](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L23)*
 
 A class that you instantiate to contain "metadata" associated with certain XML nodes. The metadata could be anything,
 but in context of being an "xml renderer" you'll probably want to use it for templates or React components.
@@ -63,7 +63,7 @@ use the metadata associated the most specific test that matches the node.
 
 Name | Type |
 ------ | ------ |
-`...sets` | [Registry](registry.md)<T\>[] |
+`...sets` | [Registry](registry.md)<ValueI\>[] |
 
 **Returns:** [GenericRenderer](genericrenderer.md)
 
@@ -75,7 +75,7 @@ Name | Type |
 
 *Inherited from [Registry](registry.md).[length](registry.md#length)*
 
-*Defined in [Registry.ts:57](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L57)*
+*Defined in [Registry.ts:57](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L57)*
 
 **Returns:** number
 
@@ -83,11 +83,11 @@ Name | Type |
 
 ### add
 
-▸ **add**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: T): void
+▸ **add**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: ValueI): void
 
 *Inherited from [Registry](registry.md).[add](registry.md#add)*
 
-*Defined in [Registry.ts:80](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L80)*
+*Defined in [Registry.ts:80](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L80)*
 
 Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 
@@ -96,7 +96,7 @@ Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 Name | Type |
 ------ | ------ |
 `test` | [XmlRendererTest](../README.md#xmlrenderertest) |
-`value` | T |
+`value` | ValueI |
 
 **Returns:** void
 
@@ -104,11 +104,11 @@ ___
 
 ### find
 
-▸ **find**(`node`: Node): T \| undefined
+▸ **find**(`node`: Node): ValueI \| undefined
 
 *Inherited from [Registry](registry.md).[find](registry.md#find)*
 
-*Defined in [Registry.ts:130](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L130)*
+*Defined in [Registry.ts:135](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L135)*
 
 Retrieve the metadata that was associated with this node before. If there are several rules that match, `.find`
 gives you only the value of the best match.
@@ -119,17 +119,17 @@ Name | Type |
 ------ | ------ |
 `node` | Node |
 
-**Returns:** T \| undefined
+**Returns:** ValueI \| undefined
 
 ___
 
 ### merge
 
-▸ **merge**(...`sets`: [Registry](registry.md)<T\>[]): void
+▸ **merge**(...`sets`: [Registry](registry.md)<ValueI\>[]): void
 
 *Inherited from [Registry](registry.md).[merge](registry.md#merge)*
 
-*Defined in [Registry.ts:64](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L64)*
+*Defined in [Registry.ts:64](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L64)*
 
 Merges other registry instances into this one, and optimizes ({@link Registry.optimize}) when done.
 
@@ -137,7 +137,7 @@ Merges other registry instances into this one, and optimizes ({@link Registry.op
 
 Name | Type |
 ------ | ------ |
-`...sets` | [Registry](registry.md)<T\>[] |
+`...sets` | [Registry](registry.md)<ValueI\>[] |
 
 **Returns:** void
 
@@ -145,18 +145,18 @@ ___
 
 ### overwrite
 
-▸ **overwrite**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: T): void
+▸ **overwrite**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: ValueI): void
 
 *Inherited from [Registry](registry.md).[overwrite](registry.md#overwrite)*
 
-*Defined in [Registry.ts:96](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L96)*
+*Defined in [Registry.ts:99](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L99)*
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
 `test` | [XmlRendererTest](../README.md#xmlrenderertest) |
-`value` | T |
+`value` | ValueI |
 
 **Returns:** void
 
@@ -168,7 +168,7 @@ ___
 
 *Inherited from [Registry](registry.md).[remove](registry.md#remove)*
 
-*Defined in [Registry.ts:117](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/Registry.ts#L117)*
+*Defined in [Registry.ts:122](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L122)*
 
 Remove a test/value set from the registry. This is the opposite of the [Registry.add](registry.md#add) method.
 
@@ -184,16 +184,16 @@ ___
 
 ### render
 
-▸ **render**(`factory`: [XmlRendererFactory](../README.md#xmlrendererfactory)<T, U\>, `node`: Node, ...`rest`: [XmlRendererRestArguments](../README.md#xmlrendererrestarguments)): U
+▸ **render**(`factory`: [XmlRendererFactory](../README.md#xmlrendererfactory)<ValueI, OutputI\>, `node`: Node, ...`rest`: [XmlRendererRestArguments](../README.md#xmlrendererrestarguments)): OutputI
 
-*Defined in [GenericRenderer.ts:74](https://github.com/wvbe/xml-renderer/blob/3c64d30/src/GenericRenderer.ts#L74)*
+*Defined in [GenericRenderer.ts:74](https://github.com/wvbe/xml-renderer/blob/87ca029/src/GenericRenderer.ts#L74)*
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
-`factory` | [XmlRendererFactory](../README.md#xmlrendererfactory)<T, U\> |
+`factory` | [XmlRendererFactory](../README.md#xmlrendererfactory)<ValueI, OutputI\> |
 `node` | Node |
 `...rest` | [XmlRendererRestArguments](../README.md#xmlrendererrestarguments) |
 
-**Returns:** U
+**Returns:** OutputI

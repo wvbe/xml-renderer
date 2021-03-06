@@ -1,6 +1,5 @@
 import { evaluateXPathToFirstNode } from 'fontoxpath';
 import { sync } from 'slimdom-sax-parser';
-
 import { getKeyForNode } from './getKeyForNode';
 
 describe('getKeyForNode()', () => {

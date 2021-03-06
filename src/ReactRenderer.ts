@@ -1,8 +1,7 @@
-import { ElementType, ReactElement, createElement as CreateElement } from 'react';
-
+import { createElement as CreateElement, ElementType, ReactElement } from 'react';
+import { traverseRenderer, XmlRendererProps } from './GenericRenderer';
 import { getKeyForNode } from './getKeyForNode';
 import { Registry } from './Registry';
-import { traverseRenderer, XmlRendererProps } from './GenericRenderer';
 
 /**
  * The output of a ReactRenderer rule should be a React element (eg. `<p>` or `<P>`), a string, or `null`.
@@ -14,32 +13,31 @@ export type XmlRendererReactOutput = ReactElement<any, any> | string | null;
  * props, so that you can query and travel further into the render loop, but also `key` for your convenience, because
  * most output is actually an array of results mapped from XML nodes.
  */
-export type XmlRendererReactProps = XmlRendererProps<XmlRendererReactOutput> & { key: string };
+export type XmlRendererReactProps<AdditionalPropsI extends {} = {}> = XmlRendererProps<
+	XmlRendererReactOutput
+> &
+	AdditionalPropsI & { key: string };
 
-/**
- * The thing that you give to {@link ReactRenderer.add} should be a React component class or function component. It is
- * given two props by xml-renderer automatically, `node` and `traverse`; see also {@link XmlRendererReactProps}.
- */
-// export type ElementType<XmlRendererReactProps & P> = ElementType<XmlRendererReactProps & P>;
+export type XmlRendererReactValueI<AdditionalPropsI> = ElementType<
+	XmlRendererReactProps<AdditionalPropsI>
+>;
+// | ((props: XmlRendererReactProps<AdditionalPropsI>) => XmlRendererReactOutput);
 
 /**
  *
  * This is the React-specific sibling of {@link GenericRenderer}.
  */
-export class ReactRenderer<P extends {} = {}> extends Registry<
-	ElementType<XmlRendererReactProps & P>
+export class ReactRenderer<AdditionalPropsI extends {} = {}> extends Registry<
+	XmlRendererReactValueI<AdditionalPropsI>
 > {
 	public render(
 		createElement: typeof CreateElement,
 		node: Node,
-		additionalProps?: P
+		additionalProps?: AdditionalPropsI
 	): XmlRendererReactOutput {
-		return traverseRenderer<ElementType<XmlRendererReactProps & P>, XmlRendererReactOutput>(
+		return traverseRenderer(
 			this,
-			(
-				Component: ElementType<XmlRendererReactProps & P> | undefined,
-				props: XmlRendererProps<XmlRendererReactOutput>
-			) =>
+			(Component, props) =>
 				Component
 					? createElement(
 							Component,
@@ -47,11 +45,7 @@ export class ReactRenderer<P extends {} = {}> extends Registry<
 								key: getKeyForNode(props.node)
 							})
 					  )
-					: // Returning null appears to conflict with what this factory function is supposed to do; return
-					  // XmlRendererReactOutput or null if no component was found.
-					  //
-					  // Returning null is not allowed for ElementType
-					  null,
+					: null,
 			node
 		);
 	}
