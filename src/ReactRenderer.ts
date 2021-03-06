@@ -7,35 +7,35 @@ import { Registry } from './Registry';
 /**
  * The output of a ReactRenderer rule should be a React element (eg. `<p>` or `<P>`), a string, or `null`.
  */
-export type XmlRendererReactOutput = ReactElement<any, any> | string | null;
+type XmlRendererReactOutput = ReactElement<any, any> | string | null;
 
 /**
  * The props that are passed to every component rendered by ReactRenderer. These include the `node` and `traverse`
  * props, so that you can query and travel further into the render loop, but also `key` for your convenience, because
  * most output is actually an array of results mapped from XML nodes.
  */
-export type XmlRendererReactProps<NodeI, AdditionalPropsI extends {}> = XmlRendererProps<
-	NodeI,
+type XmlRendererReactProps<NodeGeneric, PropsGeneric extends {}> = XmlRendererProps<
+	NodeGeneric,
 	XmlRendererReactOutput
 > &
-	AdditionalPropsI & { key: string };
+	PropsGeneric;
 
-export type XmlRendererReactValueI<NodeI, AdditionalPropsI> = ElementType<
-	XmlRendererReactProps<NodeI, AdditionalPropsI>
+type XmlRendererReactValueI<NodeGeneric, PropsGeneric> = ElementType<
+	XmlRendererReactProps<NodeGeneric, PropsGeneric>
 >;
 
 /**
  *
  * This is the React-specific sibling of {@link GenericRenderer}.
  */
-export class ReactRenderer<AdditionalPropsI extends {}, NodeI extends Node> extends Registry<
-	XmlRendererReactValueI<NodeI, AdditionalPropsI>,
-	NodeI
+export class ReactRenderer<NodeGeneric extends Node, PropsGeneric extends {}> extends Registry<
+	NodeGeneric,
+	XmlRendererReactValueI<NodeGeneric, PropsGeneric>
 > {
 	public render(
 		createElement: typeof CreateElement,
-		node: NodeI,
-		additionalProps?: AdditionalPropsI
+		node: NodeGeneric,
+		additionalProps?: PropsGeneric
 	): XmlRendererReactOutput {
 		return traverseRenderer(
 			this,

@@ -7,7 +7,7 @@ import { Registry } from './Registry';
  * it will simply traverse into the child nodes of the context node. By passing an XPath expression to `traverse` you
  * can change that to select any related node.
  */
-export type XmlRendererTraverse<OutputI> = (query?: string) => OutputI[];
+type XmlRendererTraverse<OutputGeneric> = (query?: string) => OutputGeneric[];
 
 /**
  * The renderer context information, in React passed as props, given to every rule match. The two props that are always
@@ -16,16 +16,16 @@ export type XmlRendererTraverse<OutputI> = (query?: string) => OutputI[];
  *
  * See also {@link XmlRendererTraverse}.
  */
-export type XmlRendererProps<NodeI, OutputI> = {
-	node: NodeI;
-	traverse: XmlRendererTraverse<OutputI>;
+export type XmlRendererProps<NodeGeneric, OutputGeneric> = {
+	node: NodeGeneric;
+	traverse: XmlRendererTraverse<OutputGeneric>;
 };
 
 /**
  * Additional arguments that can be passed down to a renderer callbacks when calling the renderer.
  * @todo deprecate
  */
-export type XmlRendererRestArguments = any[];
+type XmlRendererRestArguments = any[];
 
 /**
  * A compatibility layer between the renderer and React or another templating engine. Is given the metadata registered
@@ -35,33 +35,38 @@ export type XmlRendererRestArguments = any[];
  * For the {@link ReactRenderer} this factory is already provided, where it is essentially a wrapper around
  * `React.createElement`.
  */
-export type XmlRendererFactory<ValueI, NodeI, OutputI> = (
-	// For ReactRenderer, `value` means the component associated to a context node
-	value: ValueI | undefined,
+export type XmlRendererFactory<NodeGeneric, InputGeneric, OutputGeneric> = (
+	// For ReactRenderer, `input` means the component associated to a context node
+	input: InputGeneric | undefined,
 
 	// Contains the context node, and a function to travere the renderer
-	props: XmlRendererProps<NodeI, OutputI>,
+	props: XmlRendererProps<NodeGeneric, OutputGeneric>,
 
 	// @todo deprecate
 	...rest: XmlRendererRestArguments
-) => OutputI;
+) => OutputGeneric;
 
-export function traverseRenderer<NodeI extends Node, ValueI, OutputI>(
-	registry: Registry<ValueI, NodeI>,
-	factory: XmlRendererFactory<ValueI, NodeI, OutputI>,
-	node: NodeI,
+export function traverseRenderer<NodeGeneric extends Node, InputGeneric, OutputGeneric>(
+	registry: Registry<NodeGeneric, InputGeneric>,
+	factory: XmlRendererFactory<NodeGeneric, InputGeneric, OutputGeneric>,
+	node: NodeGeneric,
 	...rest: XmlRendererRestArguments
-): OutputI {
-	const value = registry.find(node);
+): OutputGeneric {
+	const input = registry.find(node);
 	const props = {
 		node,
 		traverse: (query = './node()') =>
-			evaluateXPathToNodes<NodeI>(query, node).map(n =>
-				traverseRenderer<NodeI, ValueI, OutputI>(registry, factory, n, ...rest)
+			evaluateXPathToNodes<NodeGeneric>(query, node).map(n =>
+				traverseRenderer<NodeGeneric, InputGeneric, OutputGeneric>(
+					registry,
+					factory,
+					n,
+					...rest
+				)
 			)
 	};
 
-	return factory(value, props, ...rest);
+	return factory(input, props, ...rest);
 }
 
 /**
@@ -70,12 +75,21 @@ export function traverseRenderer<NodeI extends Node, ValueI, OutputI>(
  *
  * This is the more generic sibling of {@link ReactRenderer}.
  */
-export class GenericRenderer<ValueI, NodeI extends Node, OutputI> extends Registry<ValueI, NodeI> {
+export class GenericRenderer<
+	NodeGeneric extends Node,
+	InputGeneric,
+	OutputGeneric
+> extends Registry<NodeGeneric, InputGeneric> {
 	public render(
-		factory: XmlRendererFactory<ValueI, NodeI, OutputI>,
-		node: NodeI,
+		factory: XmlRendererFactory<NodeGeneric, InputGeneric, OutputGeneric>,
+		node: NodeGeneric,
 		...rest: XmlRendererRestArguments
-	): OutputI {
-		return traverseRenderer<NodeI, ValueI, OutputI>(this, factory, node, ...rest);
+	): OutputGeneric {
+		return traverseRenderer<NodeGeneric, InputGeneric, OutputGeneric>(
+			this,
+			factory,
+			node,
+			...rest
+		);
 	}
 }

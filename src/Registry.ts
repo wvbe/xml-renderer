@@ -2,25 +2,25 @@ import { compareSpecificity, evaluateXPathToBoolean, Node } from 'fontoxpath';
 
 /**
  * An XPath expression that must evaluate to truthy or falsy for a given node, which determines wether or not the
- * metadata value associated with the test applies.
+ * metadata input associated with the test applies.
  */
-export type XmlRendererTest = string;
+type XmlRendererTest = string;
 
 /**
- * The metadata associated with nodes that match the correlating test. This metadata value is normally a component
+ * The metadata associated with nodes that match the correlating test. This metadata input is normally a component
  * (rendering to React) or another type of function, but is not actually limited to any type.
  */
-export type XmlRendererSet<ValueI> = {
+type XmlRendererSet<InputGeneric> = {
 	test: XmlRendererTest;
-	value: ValueI;
+	input: InputGeneric;
 };
 
-export class Registry<ValueI, NodeI extends Node> {
+export class Registry<NodeGeneric extends Node, InputGeneric> {
 	/**
-	 * All test/value sets known to this registery. Is kept in descending order of test specificity because {@link
+	 * All test/input sets known to this registery. Is kept in descending order of test specificity because {@link
 	 * Registry.optimize} is always called when modifying this set through public methods.
 	 */
-	private sets: XmlRendererSet<ValueI>[] = [];
+	private sets: XmlRendererSet<InputGeneric>[] = [];
 
 	/**
 	 * A class that you instantiate to contain "metadata" associated with certain XML nodes. The metadata could be anything,
@@ -32,7 +32,7 @@ export class Registry<ValueI, NodeI extends Node> {
 	 * Render functions (metadata) are associated with XML nodes via an XPath test. For any given node, the renderer will
 	 * use the metadata associated the most specific test that matches the node.
 	 */
-	constructor(...sets: Registry<ValueI, NodeI>[]) {
+	constructor(...sets: Registry<NodeGeneric, InputGeneric>[]) {
 		this.merge(...sets);
 	}
 
@@ -61,9 +61,9 @@ export class Registry<ValueI, NodeI extends Node> {
 	/**
 	 * Merges other registry instances into this one, and optimizes ({@link Registry.optimize}) when done.
 	 */
-	public merge(...sets: Registry<ValueI, NodeI>[]): void {
+	public merge(...sets: Registry<NodeGeneric, InputGeneric>[]): void {
 		this.sets = sets.reduce(
-			(sets: XmlRendererSet<ValueI>[], registry) =>
+			(sets: XmlRendererSet<InputGeneric>[], registry) =>
 				sets
 					// Remove any duplicates from the pre-existing set
 					.filter(set => !registry.sets.some(s => s.test === set.test))
@@ -75,10 +75,10 @@ export class Registry<ValueI, NodeI extends Node> {
 	}
 
 	/**
-	 * Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
+	 * Add a test/input set to the registry, and optimizes ({@link Registry.optimize}).
 	 */
-	public add(test: XmlRendererTest, value: ValueI): void {
-		if (value === undefined) {
+	public add(test: XmlRendererTest, input: InputGeneric): void {
+		if (input === undefined) {
 			throw new TypeError(
 				'Required to pass a value when adding to registry for selector: ' + test
 			);
@@ -91,13 +91,13 @@ export class Registry<ValueI, NodeI extends Node> {
 		}
 		this.sets.push({
 			test,
-			value
+			input
 		});
 
 		this.optimize();
 	}
-	public overwrite(test: XmlRendererTest, value: ValueI): void {
-		if (value === undefined) {
+	public overwrite(test: XmlRendererTest, input: InputGeneric): void {
+		if (input === undefined) {
 			throw new TypeError(
 				'Required to pass a value when overwriting to registry, use #remove() instead, for selector: ' +
 					test
@@ -112,12 +112,12 @@ export class Registry<ValueI, NodeI extends Node> {
 		}
 		this.sets.splice(index, 1, {
 			test,
-			value
+			input
 		});
 	}
 
 	/**
-	 * Remove a test/value set from the registry. This is the opposite of the {@link Registry.add} method.
+	 * Remove a test/input set from the registry. This is the opposite of the {@link Registry.add} method.
 	 */
 	public remove(test: XmlRendererTest): boolean {
 		const index = this.sets.findIndex(set => set.test === test);
@@ -130,11 +130,11 @@ export class Registry<ValueI, NodeI extends Node> {
 
 	/**
 	 * Retrieve the metadata that was associated with this node before. If there are several rules that match, `.find`
-	 * gives you only the value of the best match.
+	 * gives you only the input of the best match.
 	 */
-	public find(node: NodeI): ValueI | undefined {
+	public find(node: NodeGeneric): InputGeneric | undefined {
 		const set = this.sets.find(set => evaluateXPathToBoolean(set.test, node));
 
-		return set?.value;
+		return set?.input;
 	}
 }

@@ -1,8 +1,8 @@
 import { Node } from 'fontoxpath';
 
-type RecursiveNode<NodeI> = NodeI & {
-	parentNode?: RecursiveNode<NodeI>;
-	childNodes?: RecursiveNode<NodeI>[];
+type RecursiveNode<NodeGeneric> = NodeGeneric & {
+	parentNode?: RecursiveNode<NodeGeneric>;
+	childNodes?: RecursiveNode<NodeGeneric>[];
 	hasAttribute?: (name: string) => boolean;
 	getAttribute?: (name: string) => string;
 };
@@ -10,8 +10,8 @@ type RecursiveNode<NodeI> = NodeI & {
  * Utility function to generate a unique key for a given node. Is automatically used as the `key` prop in case you're
  * using {@link Registry.createReactRenderer}, but you may find it useful in other scenarios too.
  */
-export function getKeyForNode<NodeI extends Node>(
-	node: RecursiveNode<NodeI> | null | undefined,
+export function getKeyForNode<NodeGeneric extends Node>(
+	node: RecursiveNode<NodeGeneric> | null | undefined,
 	identifierAttribute: string = 'id'
 ) {
 	const pieces = [];

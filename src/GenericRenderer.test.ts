@@ -10,7 +10,7 @@ describe('GenericRenderer', () => {
 
 	test('make a JSONML renderer lol', () => {
 		const node = sync(`<a><b><wat>werk</wat></b><b foo="bar"/></a>`);
-		const registry = new GenericRenderer<JsonmlInput, DummyNodeI, JsonmlOutput>();
+		const registry = new GenericRenderer<DummyNodeI, JsonmlInput, JsonmlOutput>();
 
 		registry.add('self::document-node()', ({ traverse }) => ['#doc', ...traverse()]);
 		registry.add('self::text()', ({ node }) => node.nodeValue);
