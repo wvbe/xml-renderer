@@ -2,19 +2,20 @@
 
 > [Globals](../README.md) / ReactRenderer
 
-# Class: ReactRenderer<AdditionalPropsI\>
+# Class: ReactRenderer<AdditionalPropsI, NodeI\>
 
 This is the React-specific sibling of [GenericRenderer](genericrenderer.md).
 
 ## Type parameters
 
-Name | Type | Default |
------- | ------ | ------ |
-`AdditionalPropsI` | {} | {} |
+Name | Type |
+------ | ------ |
+`AdditionalPropsI` | {} |
+`NodeI` | Node |
 
 ## Hierarchy
 
-* [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\>\>
+* [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\>, NodeI\>
 
   ↳ **ReactRenderer**
 
@@ -41,11 +42,11 @@ Name | Type | Default |
 
 ### constructor
 
-\+ **new ReactRenderer**(...`sets`: [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\>\>[]): [ReactRenderer](reactrenderer.md)
+\+ **new ReactRenderer**(...`sets`: [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\>, NodeI\>[]): [ReactRenderer](reactrenderer.md)
 
 *Inherited from [Registry](registry.md).[constructor](registry.md#constructor)*
 
-*Defined in [Registry.ts:23](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L23)*
+*Defined in [Registry.ts:23](https://github.com/wvbe/xml-renderer/blob/3ae94aa/src/Registry.ts#L23)*
 
 A class that you instantiate to contain "metadata" associated with certain XML nodes. The metadata could be anything,
 but in context of being an "xml renderer" you'll probably want to use it for templates or React components.
@@ -60,7 +61,7 @@ use the metadata associated the most specific test that matches the node.
 
 Name | Type |
 ------ | ------ |
-`...sets` | [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\>\>[] |
+`...sets` | [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\>, NodeI\>[] |
 
 **Returns:** [ReactRenderer](reactrenderer.md)
 
@@ -72,7 +73,7 @@ Name | Type |
 
 *Inherited from [Registry](registry.md).[length](registry.md#length)*
 
-*Defined in [Registry.ts:57](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L57)*
+*Defined in [Registry.ts:57](https://github.com/wvbe/xml-renderer/blob/3ae94aa/src/Registry.ts#L57)*
 
 **Returns:** number
 
@@ -80,11 +81,11 @@ Name | Type |
 
 ### add
 
-▸ **add**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\>): void
+▸ **add**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\>): void
 
 *Inherited from [Registry](registry.md).[add](registry.md#add)*
 
-*Defined in [Registry.ts:80](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L80)*
+*Defined in [Registry.ts:80](https://github.com/wvbe/xml-renderer/blob/3ae94aa/src/Registry.ts#L80)*
 
 Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 
@@ -93,7 +94,7 @@ Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 Name | Type |
 ------ | ------ |
 `test` | [XmlRendererTest](../README.md#xmlrenderertest) |
-`value` | [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\> |
+`value` | [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\> |
 
 **Returns:** void
 
@@ -101,11 +102,11 @@ ___
 
 ### find
 
-▸ **find**(`node`: Node): [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\> \| undefined
+▸ **find**(`node`: NodeI): [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\> \| undefined
 
 *Inherited from [Registry](registry.md).[find](registry.md#find)*
 
-*Defined in [Registry.ts:135](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L135)*
+*Defined in [Registry.ts:135](https://github.com/wvbe/xml-renderer/blob/3ae94aa/src/Registry.ts#L135)*
 
 Retrieve the metadata that was associated with this node before. If there are several rules that match, `.find`
 gives you only the value of the best match.
@@ -114,19 +115,19 @@ gives you only the value of the best match.
 
 Name | Type |
 ------ | ------ |
-`node` | Node |
+`node` | NodeI |
 
-**Returns:** [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\> \| undefined
+**Returns:** [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\> \| undefined
 
 ___
 
 ### merge
 
-▸ **merge**(...`sets`: [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\>\>[]): void
+▸ **merge**(...`sets`: [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\>, NodeI\>[]): void
 
 *Inherited from [Registry](registry.md).[merge](registry.md#merge)*
 
-*Defined in [Registry.ts:64](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L64)*
+*Defined in [Registry.ts:64](https://github.com/wvbe/xml-renderer/blob/3ae94aa/src/Registry.ts#L64)*
 
 Merges other registry instances into this one, and optimizes ({@link Registry.optimize}) when done.
 
@@ -134,7 +135,7 @@ Merges other registry instances into this one, and optimizes ({@link Registry.op
 
 Name | Type |
 ------ | ------ |
-`...sets` | [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\>\>[] |
+`...sets` | [Registry](registry.md)<[XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\>, NodeI\>[] |
 
 **Returns:** void
 
@@ -142,18 +143,18 @@ ___
 
 ### overwrite
 
-▸ **overwrite**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\>): void
+▸ **overwrite**(`test`: [XmlRendererTest](../README.md#xmlrenderertest), `value`: [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\>): void
 
 *Inherited from [Registry](registry.md).[overwrite](registry.md#overwrite)*
 
-*Defined in [Registry.ts:99](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L99)*
+*Defined in [Registry.ts:99](https://github.com/wvbe/xml-renderer/blob/3ae94aa/src/Registry.ts#L99)*
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
 `test` | [XmlRendererTest](../README.md#xmlrenderertest) |
-`value` | [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<AdditionalPropsI\> |
+`value` | [XmlRendererReactValueI](../README.md#xmlrendererreactvaluei)<NodeI, AdditionalPropsI\> |
 
 **Returns:** void
 
@@ -165,7 +166,7 @@ ___
 
 *Inherited from [Registry](registry.md).[remove](registry.md#remove)*
 
-*Defined in [Registry.ts:122](https://github.com/wvbe/xml-renderer/blob/87ca029/src/Registry.ts#L122)*
+*Defined in [Registry.ts:122](https://github.com/wvbe/xml-renderer/blob/3ae94aa/src/Registry.ts#L122)*
 
 Remove a test/value set from the registry. This is the opposite of the [Registry.add](registry.md#add) method.
 
@@ -181,16 +182,16 @@ ___
 
 ### render
 
-▸ **render**(`createElement`: *typeof* CreateElement, `node`: Node, `additionalProps?`: AdditionalPropsI): [XmlRendererReactOutput](../README.md#xmlrendererreactoutput)
+▸ **render**(`createElement`: *typeof* CreateElement, `node`: NodeI, `additionalProps?`: AdditionalPropsI): [XmlRendererReactOutput](../README.md#xmlrendererreactoutput)
 
-*Defined in [ReactRenderer.ts:33](https://github.com/wvbe/xml-renderer/blob/87ca029/src/ReactRenderer.ts#L33)*
+*Defined in [ReactRenderer.ts:35](https://github.com/wvbe/xml-renderer/blob/3ae94aa/src/ReactRenderer.ts#L35)*
 
 #### Parameters:
 
 Name | Type |
 ------ | ------ |
 `createElement` | *typeof* CreateElement |
-`node` | Node |
+`node` | NodeI |
 `additionalProps?` | AdditionalPropsI |
 
 **Returns:** [XmlRendererReactOutput](../README.md#xmlrendererreactoutput)

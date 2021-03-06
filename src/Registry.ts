@@ -1,4 +1,4 @@
-import { compareSpecificity, evaluateXPathToBoolean } from 'fontoxpath';
+import { compareSpecificity, evaluateXPathToBoolean, Node } from 'fontoxpath';
 
 /**
  * An XPath expression that must evaluate to truthy or falsy for a given node, which determines wether or not the
@@ -15,7 +15,7 @@ export type XmlRendererSet<ValueI> = {
 	value: ValueI;
 };
 
-export class Registry<ValueI> {
+export class Registry<ValueI, NodeI extends Node> {
 	/**
 	 * All test/value sets known to this registery. Is kept in descending order of test specificity because {@link
 	 * Registry.optimize} is always called when modifying this set through public methods.
@@ -32,7 +32,7 @@ export class Registry<ValueI> {
 	 * Render functions (metadata) are associated with XML nodes via an XPath test. For any given node, the renderer will
 	 * use the metadata associated the most specific test that matches the node.
 	 */
-	constructor(...sets: Registry<ValueI>[]) {
+	constructor(...sets: Registry<ValueI, NodeI>[]) {
 		this.merge(...sets);
 	}
 
@@ -61,7 +61,7 @@ export class Registry<ValueI> {
 	/**
 	 * Merges other registry instances into this one, and optimizes ({@link Registry.optimize}) when done.
 	 */
-	public merge(...sets: Registry<ValueI>[]): void {
+	public merge(...sets: Registry<ValueI, NodeI>[]): void {
 		this.sets = sets.reduce(
 			(sets: XmlRendererSet<ValueI>[], registry) =>
 				sets
@@ -132,7 +132,7 @@ export class Registry<ValueI> {
 	 * Retrieve the metadata that was associated with this node before. If there are several rules that match, `.find`
 	 * gives you only the value of the best match.
 	 */
-	public find(node: Node): ValueI | undefined {
+	public find(node: NodeI): ValueI | undefined {
 		const set = this.sets.find(set => evaluateXPathToBoolean(set.test, node));
 
 		return set?.value;

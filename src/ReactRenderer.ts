@@ -1,3 +1,4 @@
+import { Node } from 'fontoxpath';
 import { createElement as CreateElement, ElementType, ReactElement } from 'react';
 import { traverseRenderer, XmlRendererProps } from './GenericRenderer';
 import { getKeyForNode } from './getKeyForNode';
@@ -13,26 +14,27 @@ export type XmlRendererReactOutput = ReactElement<any, any> | string | null;
  * props, so that you can query and travel further into the render loop, but also `key` for your convenience, because
  * most output is actually an array of results mapped from XML nodes.
  */
-export type XmlRendererReactProps<AdditionalPropsI extends {} = {}> = XmlRendererProps<
+export type XmlRendererReactProps<NodeI, AdditionalPropsI extends {}> = XmlRendererProps<
+	NodeI,
 	XmlRendererReactOutput
 > &
 	AdditionalPropsI & { key: string };
 
-export type XmlRendererReactValueI<AdditionalPropsI> = ElementType<
-	XmlRendererReactProps<AdditionalPropsI>
+export type XmlRendererReactValueI<NodeI, AdditionalPropsI> = ElementType<
+	XmlRendererReactProps<NodeI, AdditionalPropsI>
 >;
-// | ((props: XmlRendererReactProps<AdditionalPropsI>) => XmlRendererReactOutput);
 
 /**
  *
  * This is the React-specific sibling of {@link GenericRenderer}.
  */
-export class ReactRenderer<AdditionalPropsI extends {} = {}> extends Registry<
-	XmlRendererReactValueI<AdditionalPropsI>
+export class ReactRenderer<AdditionalPropsI extends {}, NodeI extends Node> extends Registry<
+	XmlRendererReactValueI<NodeI, AdditionalPropsI>,
+	NodeI
 > {
 	public render(
 		createElement: typeof CreateElement,
-		node: Node,
+		node: NodeI,
 		additionalProps?: AdditionalPropsI
 	): XmlRendererReactOutput {
 		return traverseRenderer(
