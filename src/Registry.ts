@@ -1,26 +1,21 @@
-import { compareSpecificity, evaluateXPathToBoolean } from 'fontoxpath';
+import { compareSpecificity, evaluateXPathToBoolean } from 'https://esm.sh/fontoxpath@3.26.0';
+// import { Node } from 'https://esm.sh/slimdom@3.1.0';
 
 /**
  * An XPath expression that must evaluate to truthy or falsy for a given node, which determines wether or not the
  * metadata value associated with the test applies.
  */
-export type XmlRendererTest = string;
+type RegistrySelector = string;
 
-/**
- * The metadata associated with nodes that match the correlating test. This metadata value is normally a component
- * (rendering to React) or another type of function, but is not actually limited to any type.
- */
-export type XmlRendererSet<T> = {
-	test: XmlRendererTest;
-	value: T;
-};
-
-export class Registry<T> {
+export class Registry<MetadataGeneric> {
 	/**
 	 * All test/value sets known to this registery. Is kept in descending order of test specificity because {@link
 	 * Registry.optimize} is always called when modifying this set through public methods.
 	 */
-	private sets: XmlRendererSet<T>[] = [];
+	protected sets: {
+		test: RegistrySelector;
+		value: MetadataGeneric;
+	}[] = [];
 
 	/**
 	 * A class that you instantiate to contain "metadata" associated with certain XML nodes. The metadata could be anything,
@@ -32,7 +27,7 @@ export class Registry<T> {
 	 * Render functions (metadata) are associated with XML nodes via an XPath test. For any given node, the renderer will
 	 * use the metadata associated the most specific test that matches the node.
 	 */
-	constructor(...sets: Registry<T>[]) {
+	constructor(...sets: Registry<MetadataGeneric>[]) {
 		this.merge(...sets);
 	}
 
@@ -61,75 +56,71 @@ export class Registry<T> {
 	/**
 	 * Merges other registry instances into this one, and optimizes ({@link Registry.optimize}) when done.
 	 */
-	public merge(...sets: Registry<T>[]): void {
-		this.sets = sets.reduce(
-			(sets: XmlRendererSet<T>[], registry) =>
+	public merge(...sets: Registry<MetadataGeneric>[]): this {
+		this.sets = sets.reduce<typeof this.sets>(
+			(sets, registry) =>
 				sets
 					// Remove any duplicates from the pre-existing set
-					.filter(set => !registry.sets.some(s => s.test === set.test))
+					.filter((set) => !registry.sets.some((s) => s.test === set.test))
 					.concat(registry.sets),
-			this.sets
+			this.sets,
 		);
-
 		this.optimize();
+		return this;
 	}
 
 	/**
 	 * Add a test/value set to the registry, and optimizes ({@link Registry.optimize}).
 	 */
-	public add(test: XmlRendererTest, value: T): void {
+	public add(test: RegistrySelector, value: MetadataGeneric): this {
 		if (value === undefined) {
 			throw new TypeError('Required to pass a value when adding to registry.');
 		}
-		if (this.sets.some(set => set.test === test)) {
-			throw new TypeError(
-				'Refusing to add a selector in duplicate, use #overwrite() instead.'
-			);
+		if (this.sets.some((set) => set.test === test)) {
+			throw new TypeError('Refusing to add a selector in duplicate, use #overwrite() instead.');
 		}
 		this.sets.push({
 			test,
-			value
+			value,
 		});
-
 		this.optimize();
+		return this;
 	}
-	public overwrite(test: XmlRendererTest, value: T): void {
+
+	public overwrite(test: RegistrySelector, value: MetadataGeneric): this {
 		if (value === undefined) {
 			throw new TypeError(
-				'Required to pass a value when overwriting to registry, use #remove() instead.'
+				'Required to pass a value when overwriting to registry, use #remove() instead.',
 			);
 		}
-		const index = this.sets.findIndex(set => set.test === test);
+		const index = this.sets.findIndex((set) => set.test === test);
 		if (index < 0) {
-			throw new TypeError(
-				'Refusing to overwrite a selector because it was never set before.'
-			);
+			throw new TypeError('Refusing to overwrite a selector because it was never set before.');
 		}
 		this.sets.splice(index, 1, {
 			test,
-			value
+			value,
 		});
+		return this;
 	}
 
 	/**
 	 * Remove a test/value set from the registry. This is the opposite of the {@link Registry.add} method.
 	 */
-	public remove(test: XmlRendererTest): boolean {
-		const index = this.sets.findIndex(set => set.test === test);
-		if (index < 0) {
-			return false;
+	public remove(test: RegistrySelector): this {
+		const index = this.sets.findIndex((set) => set.test === test);
+		if (index >= 0) {
+			this.sets.splice(index, 1).length === 1;
 		}
-
-		return this.sets.splice(index, 1).length === 1;
+		return this;
 	}
 
 	/**
 	 * Retrieve the metadata that was associated with this node before. If there are several rules that match, `.find`
 	 * gives you only the value of the best match.
 	 */
-	public find(node: Node): T | undefined {
-		const set = this.sets.find(set => evaluateXPathToBoolean(set.test, node));
-
+	public find(node: Node): MetadataGeneric | undefined {
+		const set = this.sets.find((set) => evaluateXPathToBoolean(set.test, node));
 		return set?.value;
 	}
 }

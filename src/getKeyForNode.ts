@@ -7,7 +7,7 @@ export function getKeyForNode(
 		hasAttribute?: (name: string) => boolean;
 		getAttribute?: (name: string) => string;
 	},
-	identifierAttribute: string = 'id'
+	identifierAttribute = 'id',
 ) {
 	const pieces = [];
 

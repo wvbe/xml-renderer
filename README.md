@@ -5,13 +5,7 @@ front- or back-end rendering.
 
 ## Docs & demo
 
-You can [read all the documentation here](docs/README.md), or start reading at the most probable API's:
-
--   [ReactRenderer](docs/classes/reactrenderer.md)
--   [GenericRenderer](docs/classes/genericrenderer.md)
--   [Registry](docs/classes/registry.md)
-
-See also;
+Docs have been temporarily removed. As an alternative, check out;
 
 -   Unit test code in [`src/`](src)
 -   [Demonstration site with several documents](https://wvbe.github.io/xml-renderer)
@@ -19,9 +13,8 @@ See also;
 
 ## Installation
 
-```sh
-npm i xml-renderer --save
-```
+@TODO Use in Deno
+@TODO Use in Node
 
 ## Example
 
@@ -33,7 +26,7 @@ import { sync } from 'slimdom-sax-parser';
 import { ReactRenderer } from 'xml-renderer';
 
 // Instantiate a new object to contain rendering rules
-const experience = new ReactRenderer();
+const experience = new ReactRenderer(React.createElement);
 
 // For text nodes you _probably_ just want to show the text content
 experience.add('self::text()', ({ node }) => node.nodeValue);
