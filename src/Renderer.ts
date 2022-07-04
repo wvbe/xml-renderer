@@ -13,12 +13,13 @@ export class Renderer<
 	 * Additional arguments to the render function
 	 */
 	PropsGeneric extends { [key: string]: unknown } | undefined = undefined,
-> extends Registry<Component<OutputGeneric, PropsGeneric>> {
-	private factory: Factory<OutputGeneric, PropsGeneric>;
+	MetadataGeneric = Component<OutputGeneric, PropsGeneric>,
+> extends Registry<MetadataGeneric> {
+	private factory: Factory<OutputGeneric, PropsGeneric, MetadataGeneric>;
 
 	constructor(
-		factory: Factory<OutputGeneric, PropsGeneric>,
-		...sets: Registry<Component<OutputGeneric, PropsGeneric>>[]
+		factory: Factory<OutputGeneric, PropsGeneric, MetadataGeneric>,
+		...sets: Registry<MetadataGeneric>[]
 	) {
 		super(...sets);
 		this.factory = factory;
@@ -29,8 +30,8 @@ export class Renderer<
 		...additionalProps: PropsGeneric extends undefined ? [] : [PropsGeneric]
 	): OutputGeneric | null {
 		return (function recurse(
-			registry: Renderer<OutputGeneric, PropsGeneric>,
-			factory: Factory<OutputGeneric, PropsGeneric>,
+			registry: Renderer<OutputGeneric, PropsGeneric, MetadataGeneric>,
+			factory: Factory<OutputGeneric, PropsGeneric, MetadataGeneric>,
 			node: Node,
 		): OutputGeneric | null {
 			const props = {

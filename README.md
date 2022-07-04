@@ -16,7 +16,7 @@ Docs have been temporarily removed. As an alternative, check out;
 @TODO Use in Deno
 @TODO Use in Node
 
-## Example
+## Example in NodeJS
 
 ```js
 import React from 'react';
@@ -56,4 +56,11 @@ experience.add('self::webpage', ({ traverse }) => (
 export default function MyXmlDocument({ xmlString }) {
 	return <div className="doc-or-whatever">{xp.render(React.createElement, sync(xmlString))}</div>;
 }
+```
+
+
+## Example in Deno
+```ts
+import { ReactRenderer} from 'https://deno.land/x/xml_renderer/mod.ts';
+// …
 ```

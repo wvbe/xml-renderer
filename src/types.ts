@@ -22,8 +22,9 @@ export type Factory<
 	// The render function or "component" that is gonna be given the props
 	OutputGeneric,
 	PropsGeneric extends { [key: string]: unknown } | undefined,
+	MetadataGeneric = Component<OutputGeneric, PropsGeneric>,
 > = (
-	value: Component<OutputGeneric, PropsGeneric> | undefined,
+	value: MetadataGeneric | undefined,
 	props: Props<OutputGeneric, PropsGeneric>,
 ) => OutputGeneric | null;
 
