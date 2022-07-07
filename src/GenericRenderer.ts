@@ -1,10 +1,15 @@
+import { Component, Props } from './types.ts';
 import { Renderer } from './Renderer.ts';
 
 export class GenericRenderer<
 	OutputGeneric,
 	PropsGeneric extends { [key: string]: unknown } | undefined = undefined,
-> extends Renderer<OutputGeneric, PropsGeneric> {
-	constructor(...sets: GenericRenderer<OutputGeneric, PropsGeneric>[]) {
+	MetadataGeneric extends (props: Props<OutputGeneric, PropsGeneric>) => OutputGeneric = Component<
+		OutputGeneric,
+		PropsGeneric
+	>,
+> extends Renderer<OutputGeneric, PropsGeneric, MetadataGeneric> {
+	constructor(...sets: GenericRenderer<OutputGeneric, PropsGeneric, MetadataGeneric>[]) {
 		super((component, props) => (component ? component(props) : null), ...sets);
 	}
 }
