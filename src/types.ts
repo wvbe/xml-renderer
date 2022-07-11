@@ -1,4 +1,3 @@
-// import { Node } from 'https://esm.sh/slimdom@3.1.0';
 /**
  * When creating an element rendering rule, an XPath test is matched to a Component. The rule
  * component is expected to return null or a AstComponent -- which represents a node in the DOCX
@@ -18,13 +17,22 @@ export type Component<
 	PropsGeneric extends { [key: string]: unknown } | undefined,
 > = (props: Props<OutputGeneric, PropsGeneric>) => OutputGeneric;
 
+/**
+ * The single function that calls a given {@link Component} with {@link Props} to get its output.
+ *
+ * For example:
+ *
+ * ```ts
+ * const factory = (component, props) => component ? component(props) : null;
+ * ```
+ */
 export type Factory<
 	// The render function or "component" that is gonna be given the props
 	OutputGeneric,
 	PropsGeneric extends { [key: string]: unknown } | undefined,
 	MetadataGeneric = Component<OutputGeneric, PropsGeneric>,
 > = (
-	value: MetadataGeneric | undefined,
+	component: MetadataGeneric | undefined,
 	props: Props<OutputGeneric, PropsGeneric>,
 ) => OutputGeneric | null;
 

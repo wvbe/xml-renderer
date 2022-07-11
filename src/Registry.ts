@@ -1,5 +1,4 @@
 import { compareSpecificity, evaluateXPathToBoolean } from 'https://esm.sh/fontoxpath@3.26.0';
-// import { Node } from 'https://esm.sh/slimdom@3.1.0';
 
 /**
  * An XPath expression that must evaluate to truthy or falsy for a given node, which determines wether or not the

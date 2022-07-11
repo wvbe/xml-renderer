@@ -1,7 +1,6 @@
 import { describe, expect, it, run } from 'https://deno.land/x/tincan@1.0.1/mod.ts';
 import { evaluateXPathToFirstNode } from 'https://esm.sh/fontoxpath@3.26.0';
-// import { Node } from 'https://esm.sh/slimdom@3.1.0';
-import { sync } from 'https://raw.githubusercontent.com/wvbe/slimdom-sax-parser/deno/src/index.ts';
+import { parseXmlDocument } from 'https://esm.sh/slimdom@4.0.1';
 
 import { Registry } from './Registry.ts';
 
@@ -32,7 +31,7 @@ describe('Registry', () => {
 			xp2.add('self::c', 2);
 			const xp = new Registry(xp1, xp2);
 			expect(xp.length).toBe(3);
-			expect(xp.find(sync(`<a />`).documentElement as unknown as Node)).toBe(2);
+			expect(xp.find(parseXmlDocument(`<a />`).documentElement as unknown as Node)).toBe(2);
 		});
 	});
 
@@ -42,7 +41,7 @@ describe('Registry', () => {
 			xp.add('self::a', 1);
 			xp.overwrite('self::a', 2);
 			expect(xp.length).toBe(1);
-			expect(xp.find(sync(`<a />`).documentElement as unknown as Node)).toBe(2);
+			expect(xp.find(parseXmlDocument(`<a />`).documentElement as unknown as Node)).toBe(2);
 		});
 		it('throws if the overwritten value does not exist', () => {
 			const xp = new Registry();
@@ -59,7 +58,7 @@ describe('Registry', () => {
 
 	describe('#find', () => {
 		it('returns metadata for the best matching rule', () => {
-			const dom = sync(`<x><a /><a foo="bar"/></x>`);
+			const dom = parseXmlDocument(`<x><a /><a foo="bar"/></x>`);
 			const xp = new Registry();
 			xp.add('self::a', 1);
 			xp.add('self::a[@foo]', 2);
@@ -69,7 +68,7 @@ describe('Registry', () => {
 		});
 
 		it('returns undefined if no metadata found', () => {
-			const dom = sync(`<x><a /><a foo="bar"/></x>`);
+			const dom = parseXmlDocument(`<x><a /><a foo="bar"/></x>`);
 			const xp = new Registry();
 
 			expect(xp.find(getNode(evaluateXPathToFirstNode('//x', dom)))).toBe(undefined);
@@ -85,5 +84,5 @@ describe('Registry', () => {
 		expect(xp.remove('--')).toBe(xp);
 	});
 });
-
+  
 run();

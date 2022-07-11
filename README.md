@@ -20,7 +20,7 @@ Docs have been temporarily removed. As an alternative, check out;
 
 ```js
 import React from 'react';
-import { sync } from 'slimdom-sax-parser';
+import { parseXmlDocument } from 'slimdom';
 
 // Take the default export of `xml-renderer`
 import { ReactRenderer } from 'xml-renderer';
@@ -54,7 +54,7 @@ experience.add('self::webpage', ({ traverse }) => (
 
 // ReactRenderer#render returns React elements, so you can use them in React like any other JS value
 export default function MyXmlDocument({ xmlString }) {
-	return <div className="doc-or-whatever">{xp.render(React.createElement, sync(xmlString))}</div>;
+	return <div className="doc-or-whatever">{xp.render(React.createElement, parseXmlDocument(xmlString))}</div>;
 }
 ```
 

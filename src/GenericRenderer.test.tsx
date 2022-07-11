@@ -1,14 +1,14 @@
 import React, { createElement, Fragment } from 'https://esm.sh/react@18.2.0';
 import { renderToString } from 'https://esm.sh/react-dom@18.2.0/server';
 import { describe, expect, it, run } from 'https://deno.land/x/tincan@1.0.1/mod.ts';
-import { sync } from 'https://raw.githubusercontent.com/wvbe/slimdom-sax-parser/deno/src/index.ts';
+import { parseXmlDocument } from 'https://esm.sh/slimdom@4.0.1';
 
 import { GenericRenderer, ReactRenderer } from './GenericRenderer.ts';
 
 type JsonmlOutput = string | { [name: string]: string } | Array<JsonmlOutput> | null;
 describe('GenericRenderer', () => {
 	it('make a JSONML renderer lol', () => {
-		const node = sync(`<a><b><wat>werk</wat></b><b foo="bar"/></a>`);
+		const node = parseXmlDocument(`<a><b><wat>werk</wat></b><b foo="bar"/></a>`);
 		const output = new GenericRenderer<JsonmlOutput>()
 			.add('self::document-node()', ({ traverse }) => ['#doc', ...traverse()])
 			.add('self::text()', ({ node }) => node.nodeValue)
@@ -31,7 +31,7 @@ describe('GenericRenderer', () => {
 
 describe('ReactRenderer', () => {
 	it('returns the expected result', () => {
-		const node = sync(`<a><b /><b foo="bar"/></a>`);
+		const node = parseXmlDocument(`<a><b /><b foo="bar"/></a>`);
 		const output = new ReactRenderer(createElement)
 			.add('self::document-node()', ({ traverse }) => <>{traverse()}</>)
 			.add('self::a', ({ traverse }) => <a>{traverse('./*[@foo]')}</a>)
