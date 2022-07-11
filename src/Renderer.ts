@@ -24,10 +24,7 @@ export class Renderer<
 		this.factory = factory;
 	}
 
-	render(
-		node: Node,
-		...additionalProps: PropsGeneric extends undefined ? [] : [PropsGeneric]
-	): OutputGeneric | null {
+	render(node: Node, additionalProps: PropsGeneric): OutputGeneric | null {
 		return (function recurse(
 			registry: Renderer<OutputGeneric, PropsGeneric, MetadataGeneric>,
 			factory: Factory<OutputGeneric, PropsGeneric, MetadataGeneric>,
@@ -36,12 +33,11 @@ export class Renderer<
 			const props = {
 				node,
 				traverse: (query = './node()') =>
-					evaluateXPathToNodes(query, node).map((n) => recurse(registry, factory, n as Node)),
-				// .filter((o): o is OutputGeneric => o !== null),
+					evaluateXPathToNodes(query, node)
+						.map((n) => recurse(registry, factory, n as Node))
+						.filter((o): o is OutputGeneric => o !== null),
+				...(additionalProps || {}),
 			} as Props<OutputGeneric, PropsGeneric>;
-			if (additionalProps[0]) {
-				Object.assign(props, additionalProps[0]);
-			}
 			return factory(registry.find(node), props);
 		})(this, this.factory, node);
 	}
