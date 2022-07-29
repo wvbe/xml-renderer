@@ -1,6 +1,6 @@
-import React, { createElement, Fragment } from 'https://esm.sh/react@18.2.0';
-import { renderToString } from 'https://esm.sh/react-dom@18.2.0/server';
 import { describe, expect, it, run } from 'https://deno.land/x/tincan@1.0.1/mod.ts';
+import { renderToString } from 'https://esm.sh/react-dom@18.2.0/server';
+import React, { createElement } from 'https://esm.sh/react@18.2.0';
 import { parseXmlDocument } from 'https://esm.sh/slimdom@4.0.1';
 
 import { GenericRenderer, ReactRenderer } from './GenericRenderer.ts';
@@ -24,8 +24,8 @@ describe('GenericRenderer', () => {
 				...traverse(),
 			])
 			.add('self::*[@foo]', () => null)
-			.render(node as unknown as Node);
-		expect(output).toEqual(['#doc', ['a', {}, ['b', {}, ['wat', {}, 'werk']], null]]);
+			.render(node as unknown as Node, undefined);
+		expect(output).toEqual(['#doc', ['a', {}, ['b', {}, ['wat', {}, 'werk']]]]);
 	});
 });
 
@@ -37,8 +37,20 @@ describe('ReactRenderer', () => {
 			.add('self::a', ({ traverse }) => <a>{traverse('./*[@foo]')}</a>)
 			.add('self::b', () => <em />)
 			.add('self::b[@foo]', () => <b />)
-			.render(node as unknown as Node);
+			.render(node as unknown as Node, undefined);
 		expect(output ? renderToString(output) : output).toEqual(`<a><b></b></a>`);
+	});
+});
+
+describe('nodesFactory', () => {
+	it('returns the expected result', () => {
+		const node = parseXmlDocument(`<a/>`);
+		const output = new ReactRenderer(createElement)
+			.add('self::document-node()', ({ traverse }) => <>{traverse()}</>)
+			.add('self::a', ({ traverse }) => <a>{traverse('<virtual-element />')}</a>)
+			.add('self::virtual-element', () => <em />)
+			.render(node as unknown as Node, undefined);
+		expect(output ? renderToString(output) : output).toEqual(`<a><em></em></a>`);
 	});
 });
 
