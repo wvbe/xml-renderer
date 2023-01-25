@@ -1,6 +1,6 @@
 import { describe, expect, it, run } from 'https://deno.land/x/tincan@1.0.1/mod.ts';
 
-import { evaluateXPathToFirstNode } from 'https://esm.sh/fontoxpath@3.26.0';
+import { evaluateXPathToFirstNode } from 'https://esm.sh/fontoxpath@3.28.2';
 import { parseXmlDocument } from 'https://esm.sh/slimdom@4.0.1';
 
 import { getKeyForNode } from './getKeyForNode.ts';

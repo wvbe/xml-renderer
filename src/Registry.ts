@@ -1,4 +1,4 @@
-import * as fontoxpath from 'https://esm.sh/fontoxpath@3.26.0';
+import * as fontoxpath from 'https://esm.sh/fontoxpath@3.28.2';
 
 /**
  * An XPath expression that must evaluate to truthy or falsy for a given node, which determines wether or not the
