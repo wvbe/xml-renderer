@@ -1,4 +1,4 @@
-import * as fontoxpath from 'https://esm.sh/fontoxpath@3.28.2';
+import fontoxpath from 'https://esm.sh/fontoxpath@3.28.2';
 
 import { Component, Factory, Props } from './types.ts';
 import { Registry } from './Registry.ts';
