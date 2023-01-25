@@ -1,10 +1,10 @@
-import { Component, Props } from './types.ts';
+import { type Component } from './types.ts';
 import { Renderer } from './Renderer.ts';
 
 export class GenericRenderer<
 	OutputGeneric,
 	PropsGeneric extends { [key: string]: unknown } | undefined = undefined,
-	MetadataGeneric extends (props: Props<OutputGeneric, PropsGeneric>) => OutputGeneric = Component<
+	MetadataGeneric extends Component<OutputGeneric, PropsGeneric> = Component<
 		OutputGeneric,
 		PropsGeneric
 	>,

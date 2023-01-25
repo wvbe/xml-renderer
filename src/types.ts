@@ -15,7 +15,7 @@
 export type Component<
 	OutputGeneric,
 	PropsGeneric extends { [key: string]: unknown } | undefined,
-> = (props: Props<OutputGeneric, PropsGeneric>) => OutputGeneric;
+> = (props: Props<OutputGeneric, PropsGeneric>) => OutputGeneric | Promise<OutputGeneric>;
 
 /**
  * The single function that calls a given {@link Component} with {@link Props} to get its output.
@@ -34,7 +34,7 @@ export type Factory<
 > = (
 	component: MetadataGeneric | undefined,
 	props: Props<OutputGeneric, PropsGeneric>,
-) => OutputGeneric | null;
+) => OutputGeneric | null | Promise<OutputGeneric | null>;
 
 /**
  * The props/parameters passed into a rule component by the renderer.
