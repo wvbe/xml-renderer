@@ -1,4 +1,4 @@
-import { evaluateXPath, evaluateXPathToNodes } from 'https://esm.sh/fontoxpath@3.26.0';
+import * as fontoxpath from 'https://esm.sh/fontoxpath@3.26.0';
 
 import { Component, Factory, Props } from './types.ts';
 import { Registry } from './Registry.ts';
@@ -33,9 +33,10 @@ export class Renderer<
 			const props = {
 				node,
 				traverse: (query = './node()') =>
-					evaluateXPathToNodes(query, node, null, additionalProps || {}, {
-						language: evaluateXPath.XQUERY_3_1_LANGUAGE,
-					})
+					fontoxpath
+						.evaluateXPathToNodes(query, node, null, additionalProps || {}, {
+							language: fontoxpath.evaluateXPath.XQUERY_3_1_LANGUAGE,
+						})
 						.map((n) => recurse(registry, factory, n as Node))
 						.filter((o): o is OutputGeneric => o !== null),
 				...(additionalProps || {}),

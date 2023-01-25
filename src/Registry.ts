@@ -1,4 +1,4 @@
-import { compareSpecificity, evaluateXPathToBoolean } from 'https://esm.sh/fontoxpath@3.26.0';
+import * as fontoxpath from 'https://esm.sh/fontoxpath@3.26.0';
 
 /**
  * An XPath expression that must evaluate to truthy or falsy for a given node, which determines wether or not the
@@ -45,7 +45,7 @@ export class Registry<MetadataGeneric> {
 			// Sort alphabetically by test to get a consistent sorting even if selectors are equally specific
 			.sort((setLeft, setRight) => setLeft.test.localeCompare(setRight.test))
 			// Sort by descreasing specificity as determined by fontoxpath
-			.sort((setLeft, setRight) => compareSpecificity(setRight.test, setLeft.test));
+			.sort((setLeft, setRight) => fontoxpath.compareSpecificity(setRight.test, setLeft.test));
 	}
 
 	public get length() {
@@ -119,7 +119,7 @@ export class Registry<MetadataGeneric> {
 	 * gives you only the value of the best match.
 	 */
 	public find(node: Node): MetadataGeneric | undefined {
-		const set = this.sets.find((set) => evaluateXPathToBoolean(set.test, node));
+		const set = this.sets.find((set) => fontoxpath.evaluateXPathToBoolean(set.test, node));
 		return set?.value;
 	}
 }
