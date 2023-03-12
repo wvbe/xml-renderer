@@ -1,5 +1,7 @@
 import fontoxpath from 'https://esm.sh/fontoxpath@3.28.2';
 
+import { type Options } from './types.ts';
+
 /**
  * An XPath expression that must evaluate to truthy or falsy for a given node, which determines wether or not the
  * metadata value associated with the test applies.
@@ -16,6 +18,8 @@ export class Registry<MetadataGeneric> {
 		value: MetadataGeneric;
 	}[] = [];
 
+	protected xpath: Options['fontoxpathFacade'];
+
 	/**
 	 * A class that you instantiate to contain "metadata" associated with certain XML nodes. The metadata could be anything,
 	 * but in context of being an "xml renderer" you'll probably want to use it for templates or React components.
@@ -26,8 +30,8 @@ export class Registry<MetadataGeneric> {
 	 * Render functions (metadata) are associated with XML nodes via an XPath test. For any given node, the renderer will
 	 * use the metadata associated the most specific test that matches the node.
 	 */
-	constructor(...sets: Registry<MetadataGeneric>[]) {
-		this.merge(...sets);
+	constructor(options: Partial<Options> = {}) {
+		this.xpath = options.fontoxpathFacade || fontoxpath;
 	}
 
 	/**
@@ -45,7 +49,7 @@ export class Registry<MetadataGeneric> {
 			// Sort alphabetically by test to get a consistent sorting even if selectors are equally specific
 			.sort((setLeft, setRight) => setLeft.test.localeCompare(setRight.test))
 			// Sort by descreasing specificity as determined by fontoxpath
-			.sort((setLeft, setRight) => fontoxpath.compareSpecificity(setRight.test, setLeft.test));
+			.sort((setLeft, setRight) => this.xpath.compareSpecificity(setRight.test, setLeft.test));
 	}
 
 	public get length() {
@@ -119,7 +123,7 @@ export class Registry<MetadataGeneric> {
 	 * gives you only the value of the best match.
 	 */
 	public find(node: Node): MetadataGeneric | undefined {
-		const set = this.sets.find((set) => fontoxpath.evaluateXPathToBoolean(set.test, node));
+		const set = this.sets.find((set) => this.xpath.evaluateXPathToBoolean(set.test, node));
 		return set?.value;
 	}
 }

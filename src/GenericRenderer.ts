@@ -1,4 +1,4 @@
-import { Component, Props } from './types.ts';
+import { type Options, type Component, type Props } from './types.ts';
 import { Renderer } from './Renderer.ts';
 
 export class GenericRenderer<
@@ -9,8 +9,8 @@ export class GenericRenderer<
 		PropsGeneric
 	>,
 > extends Renderer<OutputGeneric, PropsGeneric, MetadataGeneric> {
-	constructor(...sets: GenericRenderer<OutputGeneric, PropsGeneric, MetadataGeneric>[]) {
-		super((component, props) => (component ? component(props) : null), ...sets);
+	constructor(options: Partial<Options> = {}) {
+		super((component, props) => (component ? component(props) : null), options);
 	}
 }
 
@@ -19,14 +19,11 @@ export class ReactRenderer<
 	CreateElementGeneric extends (Component: any, props: any, ...children: any[]) => unknown,
 	PropsGeneric extends { [key: string]: unknown } | undefined = undefined,
 > extends Renderer<ReturnType<CreateElementGeneric>, PropsGeneric> {
-	constructor(
-		createElement: CreateElementGeneric,
-		...sets: ReactRenderer<CreateElementGeneric, PropsGeneric>[]
-	) {
+	constructor(createElement: CreateElementGeneric, options: Partial<Options> = {}) {
 		super(
 			(component, props) =>
 				component ? (createElement(component, props) as ReturnType<CreateElementGeneric>) : null,
-			...sets,
+			options,
 		);
 	}
 }

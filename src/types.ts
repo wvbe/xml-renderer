@@ -1,3 +1,5 @@
+import type fontoxpath from 'https://esm.sh/fontoxpath@3.28.2';
+
 /**
  * When creating an element rendering rule, an XPath test is matched to a Component. The rule
  * component is expected to return null or a AstComponent -- which represents a node in the DOCX
@@ -78,3 +80,18 @@ export type Props<OutputGeneric, PropsGeneric extends { [key: string]: unknown }
 	 */
 	traverse: (query?: string) => OutputGeneric[];
 } & (PropsGeneric extends undefined ? { [key: string]: never } : PropsGeneric);
+
+export type Options = {
+	/**
+	 * An object implementing the few fontoxpath methods that xml-renderer uses internally. Allows you
+	 * to override the XPath functions with your own, or with fontoxpath curried with additional options,
+	 * namespaces, etc.
+	 */
+	fontoxpathFacade: Pick<
+		typeof fontoxpath,
+		| 'evaluateXPathToBoolean'
+		| 'evaluateXPathToFirstNode'
+		| 'evaluateXPathToNodes'
+		| 'compareSpecificity'
+	>;
+};

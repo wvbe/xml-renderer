@@ -1,6 +1,6 @@
 import fontoxpath from 'https://esm.sh/fontoxpath@3.28.2';
 
-import { Component, Factory, Props } from './types.ts';
+import { type Component, type Factory, type Options, type Props } from './types.ts';
 import { Registry } from './Registry.ts';
 
 export class Renderer<
@@ -18,9 +18,9 @@ export class Renderer<
 
 	constructor(
 		factory: Factory<OutputGeneric, PropsGeneric, MetadataGeneric>,
-		...sets: Registry<MetadataGeneric>[]
+		options: Partial<Options> = {},
 	) {
-		super(...sets);
+		super(options);
 		this.factory = factory;
 	}
 
@@ -33,7 +33,7 @@ export class Renderer<
 			const props = {
 				node,
 				traverse: (query = './node()') =>
-					fontoxpath
+					registry.xpath
 						.evaluateXPathToNodes(query, node, null, additionalProps || {}, {
 							language: fontoxpath.evaluateXPath.XQUERY_3_1_LANGUAGE,
 						})

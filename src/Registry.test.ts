@@ -29,7 +29,7 @@ describe('Registry', () => {
 			const xp2 = new Registry();
 			xp2.add('self::a', 2);
 			xp2.add('self::c', 2);
-			const xp = new Registry(xp1, xp2);
+			const xp = new Registry().merge(xp1, xp2);
 			expect(xp.length).toBe(3);
 			expect(xp.find(parseXmlDocument(`<a />`).documentElement as unknown as Node)).toBe(2);
 		});
