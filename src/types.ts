@@ -1,4 +1,4 @@
-import type fontoxpath from 'https://esm.sh/fontoxpath@3.28.2';
+import type fontoxpath from 'https://esm.sh/fontoxpath@3.29.0';
 
 /**
  * When creating an element rendering rule, an XPath test is matched to a Component. The rule
